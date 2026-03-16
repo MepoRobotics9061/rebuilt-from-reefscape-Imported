@@ -1,0 +1,165 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Mod 1 setangleTOSET" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="495" y="332"/>
+	</widget>
+	<widget field="Mod 1 setangle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="492" y="304"/>
+	</widget>
+	<widget field="Mod 1 desiredspeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="497" y="278"/>
+	</widget>
+	<widget field="Mod 3 getAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="199" y="614"/>
+	</widget>
+	<widget field="Mod 2 getAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="198" y="595"/>
+	</widget>
+	<widget field="Mod 1 getAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="196" y="575"/>
+	</widget>
+	<widget field="Mod 0 getAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="192" y="552"/>
+		<width>179</width>
+		<height>20</height>
+	</widget>
+	<widget field="Mod 1 desired angle" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="350" y="650"/>
+		<width>342</width>
+	</widget>
+	<widget field="Mod 1 cur angle" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="369" y="619"/>
+		<width>310</width>
+	</widget>
+	<widget field="Joy Rot" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="231"/>
+	</widget>
+	<widget field="Joy X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="210"/>
+	</widget>
+	<widget field="Joy Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="189"/>
+	</widget>
+	<widget field="TurretAnglePostition" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="84"/>
+	</widget>
+	<widget field="backshooterVelocity (DegPerSec)" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="274" y="516"/>
+	</widget>
+	<widget field="backshooterangleDegrees" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="305" y="472"/>
+	</widget>
+	<widget field="R Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="354" y="394"/>
+	</widget>
+	<widget field="Y Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="353" y="368"/>
+	</widget>
+	<widget field="X Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="354" y="344"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="676" y="0"/>
+		<width>1182</width>
+		<height>728</height>
+		<property name="Camera Choice" value=""/>
+		<property name="Selected Camera Path" value="http://limelight.local:5800"/>
+	</static-widget>
+	<widget field="Coral Pivot Point" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="63"/>
+	</widget>
+	<widget field="Algae Pivot Point" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="42"/>
+	</widget>
+	<widget field="Controller Mode" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="21"/>
+	</widget>
+	<widget field="AutoMode" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="0"/>
+	</widget>
+	<widget field="limelight_PipelineName" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="617"/>
+	</widget>
+	<widget field="limelight_Stream" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="596"/>
+	</widget>
+	<widget field="limelight_Interface" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="575"/>
+	</widget>
+	<widget field="Tag Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="554"/>
+	</widget>
+	<widget field="Gyro" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="533"/>
+	</widget>
+	<widget field="Mod 3 Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="512"/>
+	</widget>
+	<widget field="Mod 3 Integrated" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="491"/>
+	</widget>
+	<widget field="Mod 3 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="470"/>
+	</widget>
+	<widget field="Mod 2 Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="449"/>
+	</widget>
+	<widget field="Mod 2 Integrated" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="428"/>
+	</widget>
+	<widget field="Mod 2 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="407"/>
+	</widget>
+	<widget field="Mod 1 Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="386"/>
+	</widget>
+	<widget field="Mod 1 Integrated" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="454" y="708"/>
+		<height>22</height>
+	</widget>
+	<widget field="Mod 1 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="444" y="679"/>
+	</widget>
+	<widget field="Mod 0 Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="323"/>
+	</widget>
+	<widget field="Mod 0 Integrated" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="302"/>
+	</widget>
+	<widget field="Mod 0 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="281"/>
+	</widget>
+	<widget field="Spin Amount" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="21" y="168"/>
+	</widget>
+	<widget field="AutoCommand" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="450" y="182"/>
+	</widget>
+	<widget field="Team Color" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="147"/>
+	</widget>
+	<widget field="Tag ID" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="126"/>
+	</widget>
+	<widget field="Tag Area" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="105"/>
+	</widget>
+	<widget field="Tag Y" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="463" y="46"/>
+	</widget>
+	<widget field="Tag X" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="463" y="16"/>
+	</widget>
+	<widget field="Elevator Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="169" y="196"/>
+	</widget>
+	<widget field="Coral Pivot Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="193" y="113"/>
+	</widget>
+	<widget field="Algae Pivot Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="218" y="24"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>
