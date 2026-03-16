@@ -340,13 +340,13 @@ if (false) {
 
 
 
-      operator.button(1).whileTrue(
-        m_gameCommands.fuelPivotPositionSetCommand(() -> 6.8)
-      );
+      // operator.button(1).whileTrue(
+      //   m_gameCommands.fuelPivotPositionSetCommand(() -> 6.8)
+      // );
 
-      operator.button(3).whileTrue(
-        m_gameCommands.fuelPivotPositionSetCommand(() -> 0)
-      );
+      // operator.button(3).whileTrue(
+      //   m_gameCommands.fuelPivotPositionSetCommand(() -> 0)
+      // );
 
 
 
