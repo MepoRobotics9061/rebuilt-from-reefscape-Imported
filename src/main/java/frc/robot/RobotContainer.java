@@ -287,7 +287,7 @@ if (false) {
         m_robotClimber.ClimberMove(.1)
       );
 
-
+}
 
     //  operator.button(5).whileTrue(
     //     m_robotTurret.setFireSpeedCommand(.5)
@@ -348,7 +348,7 @@ if (false) {
         m_gameCommands.fuelPivotPositionSetCommand(() -> 0)
       );
 
-}
+
 
       operator.button(1).whileTrue(
        m_robotFuelPivot.manualPivotMove(6.8)
