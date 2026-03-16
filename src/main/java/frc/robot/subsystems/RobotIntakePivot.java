@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.util.function.DoubleSupplier;
 
-public class RobotFuelPivot extends SubsystemBase {
+public class RobotIntakePivot extends SubsystemBase {
 
   SparkMax pivotWheel;
 
@@ -30,7 +30,7 @@ public class RobotFuelPivot extends SubsystemBase {
    private double maxPosSpeed = .08;
    private double maxNegSpeed = -.13;
 
-  public RobotFuelPivot() {
+  public RobotIntakePivot() {
     final int pivotWheelDeviceID = 16;
     pivotWheel = new SparkMax(pivotWheelDeviceID, MotorType.kBrushless);
     configWheel = new SparkMaxConfig();

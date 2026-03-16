@@ -21,11 +21,11 @@ import frc.robot.commands.DriveWithJoysticks;
 import frc.robot.commands.GameCommands;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.TeleopSwerveLimit;
-import frc.robot.subsystems.RobotFuel;
+import frc.robot.subsystems.RobotIntake;
 import frc.robot.subsystems.RobotCamera;
-import frc.robot.subsystems.RobotLauncher;
+import frc.robot.subsystems.RobotLaunchChain;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.RobotFuelPivot;
+import frc.robot.subsystems.RobotIntakePivot;
 import frc.robot.subsystems.RobotClimber;
 import frc.robot.subsystems.RobotTurret;
 import frc.robot.subsystems.RobotCamera;
@@ -47,11 +47,11 @@ public class RobotContainer {
   private final CommandXboxController operator = new CommandXboxController(1);
 
   /* Subsystems */
-  private final RobotFuel m_robotFuel = new RobotFuel();
+  private final RobotIntake m_robotFuel = new RobotIntake();
 
-  private final RobotFuelPivot m_robotFuelPivot = new RobotFuelPivot();
+  private final RobotIntakePivot m_robotFuelPivot = new RobotIntakePivot();
 
-  private final RobotLauncher m_robotLauncher = new RobotLauncher();
+  private final RobotLaunchChain m_robotLauncher = new RobotLaunchChain();
 
   private final RobotClimber m_robotClimber = new RobotClimber();
 

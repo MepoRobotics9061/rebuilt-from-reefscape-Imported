@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class RobotLauncher extends SubsystemBase {
+public class RobotLaunchChain extends SubsystemBase {
 
   SparkMax leftWheel;
   SparkMax rightWheel;
@@ -17,7 +17,7 @@ public class RobotLauncher extends SubsystemBase {
 
 
   //Hopper Wheels
-  public RobotLauncher() {
+  public RobotLaunchChain() {
     final int leftWheelDeviceID = 13;
     final int rightWheelDeviceID = 14;
     leftWheel = new SparkMax(leftWheelDeviceID, MotorType.kBrushless);

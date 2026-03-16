@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class RobotFuel extends SubsystemBase {
+public class RobotIntake extends SubsystemBase {
 
   SparkMax wheel;
 
@@ -18,7 +18,7 @@ public class RobotFuel extends SubsystemBase {
 
   private DigitalInput limitSwitch;
 
-  public RobotFuel() {
+  public RobotIntake() {
     final int wheelDeviceID = 12;
     wheel = new SparkMax(wheelDeviceID, MotorType.kBrushless);
     configWheel = new SparkMaxConfig();

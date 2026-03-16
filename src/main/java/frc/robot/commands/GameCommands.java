@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Swerve;
 import java.util.function.DoubleSupplier;
-import frc.robot.subsystems.RobotFuel;
-import frc.robot.subsystems.RobotFuelPivot;
-import frc.robot.subsystems.RobotLauncher;
+import frc.robot.subsystems.RobotIntake;
+import frc.robot.subsystems.RobotIntakePivot;
+import frc.robot.subsystems.RobotLaunchChain;
 import frc.robot.subsystems.RobotClimber;
 import frc.robot.subsystems.RobotCamera;
 import frc.robot.commands.LimeLightCenterATagCommand;
@@ -18,13 +18,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class GameCommands /* extends SubsystemBase */{
 
-  private final RobotFuel m_robotAlgae;
+  private final RobotIntake m_robotAlgae;
 
-  private final RobotFuelPivot m_robotFuelPivot;
+  private final RobotIntakePivot m_robotFuelPivot;
 
   private final RobotCamera m_robotCamera;
 
-  private final RobotLauncher m_robotLauncher;
+  private final RobotLaunchChain m_robotLauncher;
 
   private final RobotClimber m_robotClimber;
 
@@ -41,10 +41,10 @@ public class GameCommands /* extends SubsystemBase */{
   double tagID;
 
   public GameCommands(
-      RobotFuel robotAlgae,
-      RobotFuelPivot robotFuelPivot,
+      RobotIntake robotAlgae,
+      RobotIntakePivot robotFuelPivot,
       RobotCamera robotCamera,
-      RobotLauncher robotLauncher,
+      RobotLaunchChain robotLauncher,
       RobotClimber robotClimber,
       Swerve swerve) {
     m_robotAlgae = robotAlgae;

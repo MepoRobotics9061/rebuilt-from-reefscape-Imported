@@ -32,6 +32,8 @@ public class RobotTurret extends SubsystemBase {
     public RobotTurret() {
         turretMotor = new SparkMax(17, MotorType.kBrushless);
         backMotor = new SparkMax(15, MotorType.kBrushless);
+        
+        //NEEDS MOVED OVER TO LAUNCH CHAIN
         fireMotor = new SparkMax(10, MotorType.kBrushless);
 
         //The device's default CAN is 0. Change it using AndyMark CAN interface utility

@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.GameCommands;
-import frc.robot.subsystems.RobotFuelPivot;
+import frc.robot.subsystems.RobotIntakePivot;
 import frc.robot.subsystems.RobotClimber;
 import frc.robot.Constants;
 
@@ -12,12 +12,12 @@ public class Autos {
 
   private final GameCommands m_gameCommands;
 
-  private final RobotFuelPivot m_robotFuelPivot;
+  private final RobotIntakePivot m_robotFuelPivot;
 
   private final RobotClimber m_robotClimber;
 
   public Autos(
-    GameCommands gameCommands, RobotClimber robotElevator, RobotFuelPivot robotFuelPivot
+    GameCommands gameCommands, RobotClimber robotElevator, RobotIntakePivot robotFuelPivot
   ) {
     m_gameCommands = gameCommands;
     m_robotClimber = robotElevator;
