@@ -326,11 +326,11 @@ if (false) {
     
 
         operator.button(5).whileTrue(
-        m_robotLauncher.launch(-.3)
+        m_robotLauncher.launch(/*-.3*/SmartDashboard.getNumber("Launch Chain Speed", .3) * -1)
       );
 
       operator.button(6).whileTrue(
-        m_robotLauncher.launch(.3)
+        m_robotLauncher.launch(/*.3*/SmartDashboard.getNumber("Launch Chain Speed", .3))
       );
 
       // operator.button(2).whileTrue(
@@ -350,12 +350,12 @@ if (false) {
 
 
 
-      operator.button(1).whileTrue(
-       m_robotFuelPivot.manualPivotMove(6.8)
+      operator.povLeft().whileTrue(
+        m_robotFuelPivot.manualPivotMove(6.8)
       );
 
-      operator.button(3).whileTrue(
-              m_robotFuelPivot.manualPivotMove(0)
+      operator.povRight().whileTrue(
+        m_robotFuelPivot.manualPivotMove(0)
       );
 
 
