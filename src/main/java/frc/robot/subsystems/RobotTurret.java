@@ -120,7 +120,7 @@ AM_EncoderStatus statusData = hexEncoder.getStatus();
     }
 
     public void setFireSpeed(double speed) {
-        fireMotor.set(speed);
+        fireMotor.set(speed * SmartDashboard.getNumber("Fire Speed", 1));
     }
 
     // Stop turret

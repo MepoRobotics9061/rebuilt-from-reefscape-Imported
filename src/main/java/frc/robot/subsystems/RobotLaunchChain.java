@@ -5,6 +5,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -57,7 +58,7 @@ public class RobotLaunchChain extends SubsystemBase {
     return this.runEnd(
         () -> {
           // if(limitSwitch.get() == false) {
-            setIndvWheelSpeed(speed1, speed2);
+            setIndvWheelSpeed(SmartDashboard.getNumber("Bottom Hopper Speed", .3)*speed1, SmartDashboard.getNumber("Top Hopper Speed Speed", .3)*speed2);
           // } else {
           //   stop();
           // }

@@ -55,7 +55,7 @@ public class RobotContainer {
 
   private final RobotClimber m_robotClimber = new RobotClimber();
 
-  //private final RobotTurret m_robotTurret = new RobotTurret();
+  private final RobotTurret m_robotTurret = new RobotTurret();
 
   private final RobotCamera m_robotCamera = new RobotCamera();
 
@@ -116,7 +116,7 @@ public class RobotContainer {
     //  poseEstimator,
       () -> -driver.getY(),
       () -> -driver.getX(),
-      () -> -driver.getZ(),
+      () -> driver.getZ(),
       () -> true,
       () -> 1.0));
 
@@ -150,6 +150,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
     /* Driver Buttons */
 
     // zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
@@ -305,11 +306,11 @@ if (false) {
       // );
 
       operator.button(3).whileTrue(
-        m_robotFuel.intake(.1)
+        m_robotFuel.intake(.3)
       );
 
       operator.button(2).whileTrue(
-        m_robotFuel.launch(.4)
+        m_robotFuel.launch(.2)
       );
 
       //down
@@ -322,23 +323,17 @@ if (false) {
         m_robotFuelPivot.testingSpeed(-.12)
       );
 
-
-    
-
         operator.button(5).whileTrue(
-        m_robotLauncher.launch(/*-.3*/SmartDashboard.getNumber("Launch Chain Speed", .3) * -1)
+        m_robotLauncher.indvSpeedCommand(-.4,-.4)
       );
 
       operator.button(6).whileTrue(
-        m_robotLauncher.launch(/*.3*/SmartDashboard.getNumber("Launch Chain Speed", .3))
+        m_robotLauncher.indvSpeedCommand(1, 1)
       );
 
       // operator.button(2).whileTrue(
       //   m_robotTurret.setFireSpeedCommand(.5)
       // );
-
-
-
 
       // operator.button(1).whileTrue(
       //   m_gameCommands.fuelPivotPositionSetCommand(() -> 6.8)
@@ -348,14 +343,20 @@ if (false) {
       //   m_gameCommands.fuelPivotPositionSetCommand(() -> 0)
       // );
 
-
-
-      operator.povLeft().whileTrue(
+      operator.povDown().whileTrue(
         m_robotFuelPivot.manualPivotMove(6.8)
       );
 
-      operator.povRight().whileTrue(
+      operator.povUp().whileTrue(
         m_robotFuelPivot.manualPivotMove(0)
+      );
+
+      operator.povLeft().whileTrue(
+        m_robotTurret.setFireSpeedCommand(1)
+      );
+
+      operator.povRight().whileTrue(
+        m_robotTurret.setFireSpeedCommand(-1)
       );
 
 
