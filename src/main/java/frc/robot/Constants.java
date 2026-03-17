@@ -177,16 +177,6 @@ public final class Constants {
   }
 
   public static final class Controller {
-    // X = 3
-    // Y = 4
-    // A = 1 
-    // B = 2
-    // LB = 5
-    // RB = 6
-    // Back = 7
-    // Start = 8
-    // LS = 9
-    // RS = 10
     public static final int X = 3;
     public static final int Y = 4;
     public static final int A = 1;
