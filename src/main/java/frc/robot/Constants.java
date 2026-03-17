@@ -175,4 +175,28 @@ public final class Constants {
       public static final double positionCoralPivot = -825;
       public static final double positionAlgaePivot = -20;
   }
+
+  public static final class Controller {
+    // X = 3
+    // Y = 4
+    // A = 1 
+    // B = 2
+    // LB = 5
+    // RB = 6
+    // Back = 7
+    // Start = 8
+    // LS = 9
+    // RS = 10
+    public static final double X = 3;
+    public static final double Y = 4;
+    public static final double A = 1;
+    public static final double B = 2;
+    public static final double LB = 5;
+    public static final double RB = 6;
+    public static final double Back = 7;
+    public static final double Start = 8;
+    public static final double LeftStick = 9;
+    public static final double RightStick = 10;
+
+  }
 }
