@@ -187,16 +187,15 @@ public final class Constants {
     // Start = 8
     // LS = 9
     // RS = 10
-    public static final double X = 3;
-    public static final double Y = 4;
-    public static final double A = 1;
-    public static final double B = 2;
-    public static final double LB = 5;
-    public static final double RB = 6;
-    public static final double Back = 7;
-    public static final double Start = 8;
-    public static final double LeftStick = 9;
-    public static final double RightStick = 10;
-
+    public static final int X = 3;
+    public static final int Y = 4;
+    public static final int A = 1;
+    public static final int B = 2;
+    public static final int LB = 5;
+    public static final int RB = 6;
+    public static final int Back = 7;
+    public static final int Start = 8;
+    public static final int LeftStick = 9;
+    public static final int RightStick = 10;
   }
 }

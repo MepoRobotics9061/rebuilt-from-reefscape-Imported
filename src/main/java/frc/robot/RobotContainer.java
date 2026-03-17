@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import frc.robot.Constants;
 import frc.robot.autos.Autos;
 import frc.robot.commands.LimeLightCenterATagCommand;
 import frc.robot.commands.DriveWithJoysticks;
@@ -304,32 +305,32 @@ if (false) {
       //   m_robotTurret.testingTurretSpeed(-.02)
       // );
 
-      operator.button(3).whileTrue(
+      operator.button(Constants.Controller.X).whileTrue(
         m_robotFuel.intake(.1)
       );
 
-      operator.button(2).whileTrue(
+      operator.button(Constants.Controller.B).whileTrue(
         m_robotFuel.launch(.4)
       );
 
       //down
-      operator.button(1).whileTrue(
+      operator.button(Constants.Controller.A).whileTrue(
         m_robotFuelPivot.testingSpeed(.12)
       );
 
       //up
-      operator.button(4).whileTrue(
+      operator.button(Constants.Controller.Y).whileTrue(
         m_robotFuelPivot.testingSpeed(-.12)
       );
 
 
     
 
-        operator.button(5).whileTrue(
+        operator.button(Constants.Controller.LB).whileTrue(
         m_robotLauncher.launch(/*-.3*/SmartDashboard.getNumber("Launch Chain Speed", .3) * -1)
       );
 
-      operator.button(6).whileTrue(
+      operator.button(Constants.Controller.RB).whileTrue(
         m_robotLauncher.launch(/*.3*/SmartDashboard.getNumber("Launch Chain Speed", .3))
       );
 
