@@ -65,7 +65,13 @@ public class RobotIntakePivot extends SubsystemBase {
               if(targetSpeed > maxPosSpeed) {
                 targetSpeed = maxPosSpeed;
               }
-              setSpeed(targetSpeed);
+
+              if (targetAngle > 6 && pivotEncoderValue > 6) {
+                setSpeed(.03);
+              } else {
+                setSpeed(targetSpeed);
+              }
+              
 SmartDashboard.putNumber("Fuel Pivot SetSpeed", targetSpeed);
           },
           () -> {

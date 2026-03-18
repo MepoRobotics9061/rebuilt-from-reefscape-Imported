@@ -2,36 +2,29 @@ package frc.robot.subsystems;
 
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
 import com.revrobotics.spark.SparkMax;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RobotLaunchChain extends SubsystemBase {
 
-  SparkMax leftWheel;
-  SparkMax rightWheel;
+  SparkMax fireWheel;
+  SparkMax bottomWheel;
+  SparkMax topWheel;
 
-  private DigitalInput limitSwitch;
-
-
-  //Hopper Wheels
   public RobotLaunchChain() {
-    final int leftWheelDeviceID = 13;
-    final int rightWheelDeviceID = 14;
-    leftWheel = new SparkMax(leftWheelDeviceID, MotorType.kBrushless);
-    rightWheel = new SparkMax(rightWheelDeviceID, MotorType.kBrushless);
-
-    limitSwitch = new DigitalInput(5);
-
+      //Hopper Wheels
+    final int bottomWheelDeviceID = 13;
+    final int topWheelDeviceID = 14;
+    bottomWheel = new SparkMax(bottomWheelDeviceID, MotorType.kBrushless);
+    topWheel = new SparkMax(topWheelDeviceID, MotorType.kBrushless);
   }
 
   public Command launch(double speed) {
     return this.runEnd(
         () -> {
-            setWheelSpeed(speed);
+            setHopperSpeed(speed);
         },
         () -> {
           stop();
@@ -42,11 +35,7 @@ public class RobotLaunchChain extends SubsystemBase {
   public Command intake(double speed) {
     return this.runEnd(
         () -> {
-          // if(limitSwitch.get() == false) {
-            setWheelSpeed(-speed);
-          // } else {
-          //   stop();
-          // }
+            setHopperSpeed(-speed);
         },
         () -> {
           stop();
@@ -54,14 +43,10 @@ public class RobotLaunchChain extends SubsystemBase {
       );
   }
 
-    public Command indvSpeedCommand(double speed1, double speed2) {
+    public Command indvSpeedCommand(double speedB, double speedT) {
     return this.runEnd(
         () -> {
-          // if(limitSwitch.get() == false) {
-            setIndvWheelSpeed(SmartDashboard.getNumber("Bottom Hopper Speed", .3)*speed1, SmartDashboard.getNumber("Top Hopper Speed Speed", .3)*speed2);
-          // } else {
-          //   stop();
-          // }
+            setIndvWheelSpeed(SmartDashboard.getNumber("Bottom Hopper Speed", .3)*speedB, SmartDashboard.getNumber("Top Hopper Speed", .3)*speedT);
         },
         () -> {
           stop();
@@ -69,19 +54,18 @@ public class RobotLaunchChain extends SubsystemBase {
       );
   }
 
-  public void setWheelSpeed(double speed) {
-    leftWheel.set(speed);
-    rightWheel.set(-speed);
-        System.out.println("runCoralLaunchCommand: RUNNING" + speed);
+  public void setHopperSpeed(double speed) {
+    bottomWheel.set(speed);
+    topWheel.set(-speed);
   }
 
-    public void setIndvWheelSpeed(double speedL, double speedR) {
-    leftWheel.set(speedL);
-    rightWheel.set(-speedR);
+    public void setIndvWheelSpeed(double speedB, double speedT) {
+    bottomWheel.set(speedB);
+    topWheel.set(-speedT);
   }
 
   public void stop() {
-    leftWheel.set(0);
-    rightWheel.set(0);
+    bottomWheel.set(0);
+    topWheel.set(0);
   }
 }

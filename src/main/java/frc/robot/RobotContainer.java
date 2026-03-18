@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import frc.robot.Constants;
 import frc.robot.autos.Autos;
 import frc.robot.commands.LimeLightCenterATagCommand;
 import frc.robot.commands.DriveWithJoysticks;
@@ -27,7 +28,6 @@ import frc.robot.subsystems.RobotLaunchChain;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.RobotIntakePivot;
 import frc.robot.subsystems.RobotClimber;
-import frc.robot.subsystems.RobotTurret;
 import frc.robot.subsystems.RobotCamera;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -47,15 +47,13 @@ public class RobotContainer {
   private final CommandXboxController operator = new CommandXboxController(1);
 
   /* Subsystems */
-  private final RobotIntake m_robotFuel = new RobotIntake();
+  private final RobotIntake m_robotIntake = new RobotIntake();
 
-  private final RobotIntakePivot m_robotFuelPivot = new RobotIntakePivot();
+  private final RobotIntakePivot m_robotIntakePivot = new RobotIntakePivot();
 
-  private final RobotLaunchChain m_robotLauncher = new RobotLaunchChain();
+  private final RobotLaunchChain m_robotLaunchChain = new RobotLaunchChain();
 
   private final RobotClimber m_robotClimber = new RobotClimber();
-
-  private final RobotTurret m_robotTurret = new RobotTurret();
 
   private final RobotCamera m_robotCamera = new RobotCamera();
 
@@ -75,66 +73,28 @@ public class RobotContainer {
   public RobotContainer() {
 
     m_gameCommands = new GameCommands(
-      m_robotFuel,
-      m_robotFuelPivot,
+      m_robotIntake,
+      m_robotIntakePivot,
       m_robotCamera,
-      m_robotLauncher,
+      m_robotLaunchChain,
       m_robotClimber,
       s_Swerve
     );
 
     m_autos = new Autos(
-      m_gameCommands, m_robotClimber, m_robotFuelPivot
+      m_gameCommands, m_robotClimber, m_robotIntakePivot
     );
 
     m_autoChooser = new SendableChooser<Command>();
 
-    // s_Swerve.setDefaultCommand(
-    
-    //   new TeleopSwerve(
-    //     s_Swerve,
-    //     () -> driver.getRawAxis(1) * driver.getRawAxis(1) * driver.getRawAxis(1),
-    //     () -> driver.getRawAxis(0) * driver.getRawAxis(0) * driver.getRawAxis(0),
-    //     () -> driver.getRawAxis(2) * driver.getRawAxis(2) * driver.getRawAxis(2) * .5,
-    //     () -> true));
-
-
-
-    // s_Swerve.setDefaultCommand(
-    
-    // new TeleopSwerveLimit(
-    //   s_Swerve,
-    //   () -> driver.getRawAxis(1) * driver.getRawAxis(1) * driver.getRawAxis(1),
-    //   () -> driver.getRawAxis(0) * driver.getRawAxis(0) * driver.getRawAxis(0),
-    //   () -> driver.getRawAxis(2) * driver.getRawAxis(2) * driver.getRawAxis(2) * .5,
-    //   () -> -driver.getRawAxis(3) ,
-    //   () -> true));
-
-
-          s_Swerve.setDefaultCommand(new DriveWithJoysticks(
+      s_Swerve.setDefaultCommand(new DriveWithJoysticks(
       s_Swerve,
-    //  poseEstimator,
+    //poseEstimator,
       () -> -driver.getY(),
       () -> -driver.getX(),
       () -> driver.getZ(),
       () -> true,
       () -> 1.0));
-
-
-
-    // m_robotFuelPivot.setDefaultCommand(
-    //   new RunCommand(
-    //     () -> m_robotFuelPivot.voidPivotMove(SmartDashboard.getNumber("Fuel Pivot Point", 0)), 
-    //     m_robotFuelPivot
-    //   )
-    // );
-
-    // m_robotClimber.setDefaultCommand(
-    //   new RunCommand(
-    //     () -> m_robotClimber.voidClimberMove(SmartDashboard.getNumber("Elevator Point", -4)), 
-    //     m_robotClimber
-    //   )
-    // );
 
     // Configure the button bindings
     configureButtonBindings();
@@ -153,11 +113,7 @@ public class RobotContainer {
 
     /* Driver Buttons */
 
-    // zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
-    driver.button(3).onTrue(
-      new InstantCommand(() -> s_Swerve.zeroGyro())
-    );
 
     /*  XBox:
           5, 6 [Bumpers] = Intake
@@ -174,193 +130,40 @@ public class RobotContainer {
           11 = Processor A Tag
         */
 
-if (false) {
+      /* Operator Buttons */
 
-    driver.button(7).whileTrue(
-        m_gameCommands.centerATagCommand());
+      operator.button(Constants.Controller.X).whileTrue(
+        m_robotIntake.intake(.36)
+      );
 
-    driver.button(9).and(() -> controllerMode == "Coral").whileTrue(
-      m_gameCommands.coralPrepCommand()
-    );
+      operator.button(Constants.Controller.B).whileTrue(
+        m_robotIntake.launch(.1)
+      );
 
-    driver.button(9).and(() -> controllerMode == "Algae").whileTrue(
-      m_gameCommands.algaePrepCommand()
-    );
+      operator.button(Constants.Controller.LB).whileTrue(
+        m_robotLaunchChain.indvSpeedCommand(-1, -1)
+      );
 
+      operator.button(Constants.Controller.RB).whileTrue(
+        m_robotLaunchChain.indvSpeedCommand(1, 1)
+      );
 
-    operator.button(9).onTrue(
-      Commands
-      .sequence(
-        new InstantCommand(() -> setMode("Coral")),
-     //   m_robotCoralPivot.manualPivotMove(-50).until(m_robotCoralPivot::inPosition).asProxy(),
-        m_robotFuelPivot.manualPivotMove(-1).until(() -> true).asProxy()     
-      )
-    );
+      operator.button(Constants.Controller.Y).whileTrue(
+        m_robotIntakePivot.manualPivotMove(6.8)
+      );
 
+      operator.button(Constants.Controller.A).whileTrue(
+        m_robotIntakePivot.manualPivotMove(0)
+      );
 
-      // operator.button(1).and(() -> controllerMode == "Coral").whileTrue(
-      //   m_gameCommands.coralPivotPositionSetCommand(() -> -825)
-      //   //m_gameCommands.manualCoralPivotMove(-700)
-      //   //m_robotCoralPivot.testingSpeed(-.1)
+      // operator.povDown().whileTrue(
+      //   m_robotClimber.ClimberMove(-.1)
       // );
 
-      // operator.button(3).and(() -> controllerMode == "Coral").whileTrue(
-      //   m_gameCommands.coralPivotPositionSetCommand(() -> -675)
-      //    //m_gameCommands.manualCoralPivotMove(-500)
-      //   // m_robotCoralPivot.testingSpeed(.1)
+      // operator.povUp().whileTrue(
+      //   m_robotClimber.ClimberMove(.1)
       // );
-
-
-      // operator.button(2).and(() -> controllerMode == "Coral").whileTrue(
-      //   m_gameCommands.coralPivotPositionSetCommand(() -> -100)
-      //    //m_gameCommands.manualCoralPivotMove(-100)
-      // );
-      // operator.button(1).onTrue(
-      //   m_gameCommands.algaePivotPositionSetCommand(-1)
-         //m_robotAlgaePivot.testingSpeed(-.1)
-      //);
-
-      operator.povDown().and(() -> controllerMode == "Coral").onTrue(
-        m_gameCommands.climberMoveCommand(-5)
-      );
-
-      operator.povLeft().and(() -> controllerMode == "Coral").onTrue(
-        m_gameCommands.climberMoveCommand(-35)
-      );
-
-      operator.povUp().and(() -> controllerMode == "Coral").onTrue(
-        m_gameCommands.climberMoveCommand(-95)
-      );
-
- 
-
-      // operator.rightTrigger().and(() -> controllerMode == "Coral").onTrue(
-      //  new SequentialCommandGroup(
-      //   m_gameCommands.runCoralLaunchCommand(.5).withTimeout(1),
-      //   m_gameCommands.coralPivotPositionSetCommand(() -> -50).withTimeout(2),
-      //   m_gameCommands.elevatorMoveCommand(-5)
-      //  )
-      // );
-
-      //operator.leftBumper().onTrue(
-      //  //m_robotElevator.bumpPosition(false)
-       // new InstantCommand(() -> elevatorOffsetUp())
-      //);
-
-      //operator.rightBumper().onTrue(
-     //   //m_robotElevator.bumpPosition(true)
-      //  new InstantCommand(() -> elevatorOffsetDown())
-      //);
-
-
-
-      operator.button(4).whileTrue(
-        m_gameCommands.fuelPivotPositionSetCommand(() -> -1)
-        //m_robotAlgaePivot.testingSpeed(.1)
-      );
-
-      operator.povDown().onTrue(
-        m_gameCommands.climberMoveCommand(-6)
-      );
-
-      operator.povLeft().onTrue(
-        m_gameCommands.climberMoveCommand(-45)
-      );
-
-      operator.povUp().onTrue(
-        m_gameCommands.climberMoveCommand(-75)
-      );
-
-      operator.leftTrigger().whileTrue(
-        m_gameCommands.runFuelIntakeCommand(0.5)
-      );
-
-      operator.rightTrigger().whileTrue(
-        m_gameCommands.runFuelLaunchCommand(0.5)
-      );
-
-
-           operator.button(5).whileTrue(
-        m_robotClimber.ClimberMove(-.1)
-      );
-
-      operator.button(6).whileTrue(
-        m_robotClimber.ClimberMove(.1)
-      );
-
-}
-
-    //  operator.button(5).whileTrue(
-    //     m_robotTurret.setFireSpeedCommand(.5)
-    //   );
-
-
-      // //down
-      // operator.button(5).whileTrue(
-      //   m_robotTurret.testingTurretSpeed(.02)
-      // );
-
-      // //up
-      // operator.button(6).whileTrue(
-      //   m_robotTurret.testingTurretSpeed(-.02)
-      // );
-
-      operator.button(3).whileTrue(
-        m_robotFuel.intake(.3)
-      );
-
-      operator.button(2).whileTrue(
-        m_robotFuel.launch(.2)
-      );
-
-      //down
-      operator.button(1).whileTrue(
-        m_robotFuelPivot.testingSpeed(.12)
-      );
-
-      //up
-      operator.button(4).whileTrue(
-        m_robotFuelPivot.testingSpeed(-.12)
-      );
-
-        operator.button(5).whileTrue(
-        m_robotLauncher.indvSpeedCommand(-.4,-.4)
-      );
-
-      operator.button(6).whileTrue(
-        m_robotLauncher.indvSpeedCommand(1, 1)
-      );
-
-      // operator.button(2).whileTrue(
-      //   m_robotTurret.setFireSpeedCommand(.5)
-      // );
-
-      // operator.button(1).whileTrue(
-      //   m_gameCommands.fuelPivotPositionSetCommand(() -> 6.8)
-      // );
-
-      // operator.button(3).whileTrue(
-      //   m_gameCommands.fuelPivotPositionSetCommand(() -> 0)
-      // );
-
-      operator.povDown().whileTrue(
-        m_robotFuelPivot.manualPivotMove(6.8)
-      );
-
-      operator.povUp().whileTrue(
-        m_robotFuelPivot.manualPivotMove(0)
-      );
-
-      operator.povLeft().whileTrue(
-        m_robotTurret.setFireSpeedCommand(1)
-      );
-
-      operator.povRight().whileTrue(
-        m_robotTurret.setFireSpeedCommand(-1)
-      );
-
-
-  }  
+  }
 
   private void configureAutos() {
     m_autoChooser.addOption("1", m_autos.autoCommand1());
