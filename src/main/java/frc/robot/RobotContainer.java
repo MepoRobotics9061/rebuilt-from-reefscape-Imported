@@ -65,7 +65,7 @@ public class RobotContainer {
   private final Autos m_autos;
   private final SendableChooser<Command> m_autoChooser;
 
-  String controllerMode = SmartDashboard.getString("Controller Mode", "Coral");
+  String climbMode = "Off (press twice)";
 
   Boolean isAuto = false;
 
@@ -99,6 +99,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     configureAutos();
+
+    SmartDashboard.putString("Climb Mode", climbMode);
   }
 
   /**
@@ -156,13 +158,23 @@ public class RobotContainer {
         m_robotIntakePivot.manualPivotMove(0)
       );
 
-      // operator.povDown().whileTrue(
-      //   m_robotClimber.ClimberMove(-.1)
-      // );
+      operator.povDown().and(() -> climbMode == "On").whileTrue(
+        m_robotClimber.ClimberMove(-.1)
+      );
 
-      // operator.povUp().whileTrue(
-      //   m_robotClimber.ClimberMove(.1)
-      // );
+      operator.povUp().and(() -> climbMode == "On").whileTrue(
+        m_robotClimber.ClimberMove(.1)
+      );
+
+      operator.button(Constants.Controller.LeftStick).onTrue(
+        new InstantCommand( () -> {if(climbMode == "Off"){
+          climbMode = "On";
+        }else{
+          climbMode = "Off";
+        }
+          SmartDashboard.putString("Climb Mode", climbMode);
+      })
+      );
   }
 
   private void configureAutos() {
@@ -184,12 +196,5 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return m_autoChooser.getSelected();
   }
-
-  public void setMode(String mode){
-    controllerMode = mode;
-    SmartDashboard.putString("Controller Mode", mode);
-  }
-  
-  
 
 }
