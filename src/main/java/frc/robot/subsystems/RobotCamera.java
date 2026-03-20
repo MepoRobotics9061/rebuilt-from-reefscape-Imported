@@ -29,14 +29,6 @@ public class RobotCamera extends SubsystemBase {
   public RobotCamera() {
   }
 
-  // public Command centerATagCommand(){
-  //   return driveCommand(0, tagX/20, gyro - spinAmount);
-  // }
-
-  // public Command coralPrepCommand(){
-  //   return driveCommand((10 - tagArea)/30, tagX/20,  gyro - spinAmount);
-  // }
-
   @Override
   public void periodic() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -69,95 +61,26 @@ public class RobotCamera extends SubsystemBase {
 
     SmartDashboard.putString("Team Color", teamCol);
 
-    if (tagID == 1) {
+    if (tagID == 5 || tagID == 8 || tagID == 21 || tagID == 24) {
     
-        spinAmount = 45;
-      
-    } else if (tagID == 2) {
-     
-        spinAmount = 315;
-     
-    } else if (tagID == 3) {
-      
-        spinAmount = 270;
-      
-    } else if (tagID == 4 || tagID == 5 || tagID == 7 ) {
-     
-        spinAmount = 180;
-      
-    }  else if ( tagID == 21) {
-  
-        spinAmount = 0;
-     
-    }  else if (tagID == 6  ) {
-      
-        spinAmount = 240;
-     
-    }else if (tagID == 22) {
-      
-        spinAmount = 60;
-     
-    }
-    
-    else if (tagID == 8 ) {
-   
-        spinAmount = 120;
-     
-    } 
-    else if (tagID == 12 ) {
-   
-      spinAmount = 315;
-   
-  } 
-    else if (tagID == 20) {
-     
-        spinAmount = 300;
-      
-    } 
-    else if (tagID == 10 ) { 
-        spinAmount = 0;  
-    } 
-    else if (tagID == 14 || tagID == 15 || tagID == 18) {
-     
-        spinAmount = 180;
-    
-    } 
+        spinAmount = 90;
 
-    else if (tagID == 9  ) {
-     
-        spinAmount = 60;
-   
-    } 
-    else if (tagID == 19) {
-      
-        spinAmount = 240;
-      
-    } 
-    else if (tagID == 11 ) {
-      
-        spinAmount = 300;
-      
-    } 
-    else if ( tagID == 17) {
-      
-        spinAmount = 120;
-      
-    } 
-    else if (tagID == 12) {
-     
-        spinAmount = 315;
-      
-    } else if (tagID == 13) {
-     
-        spinAmount = 45;
-      
-    } else if (tagID == 16) {
-       
-          spinAmount = 270;
-        
-      //Used only for our April Tag (#42)
-    } else if (tagID == 42) {
-      spinAmount = 0;
+    } else if (tagID == 2 || tagID == 11 || tagID == 18 || tagID == 27){
+
+        spinAmount = -90;
+    
+    } else if (tagID == 7 || tagID == 9 || tagID == 10 || tagID == 12 || tagID == 23 || tagID == 25 || tagID == 26 || tagID == 28){
+    
+        spinAmount = 0;
+    
+    } else if (tagID == 1 || tagID == 3 || tagID == 4 || tagID == 6 || tagID == 13 || tagID == 14 || tagID == 15 || tagID == 16 || tagID == 17 || tagID == 19 || tagID == 20 || tagID == 22 || tagID == 29 || tagID == 30 || tagID == 31 || tagID == 32) {
+    
+        spinAmount = 180;
+    
+    } else if (tagID == 42) /* Used only for the testing April Tag */{
+
+        spinAmount = 0;
+
     }
 
     SmartDashboard.putNumber("Spin Amount", spinAmount);
