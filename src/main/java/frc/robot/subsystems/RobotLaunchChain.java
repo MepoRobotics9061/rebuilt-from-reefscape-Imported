@@ -21,7 +21,7 @@ public class RobotLaunchChain extends SubsystemBase {
     topWheel = new SparkMax(topWheelDeviceID, MotorType.kBrushless);
   }
 
-  public Command launch(double speed) {
+  public Command push(double speed) {
     return this.runEnd(
         () -> {
             setHopperSpeed(speed);
@@ -32,7 +32,7 @@ public class RobotLaunchChain extends SubsystemBase {
       );
   }
 
-  public Command intake(double speed) {
+  public Command fire(double speed) {
     return this.runEnd(
         () -> {
             setHopperSpeed(-speed);
@@ -46,7 +46,7 @@ public class RobotLaunchChain extends SubsystemBase {
     public Command indvSpeedCommand(double speedB, double speedT) {
     return this.runEnd(
         () -> {
-            setIndvWheelSpeed(SmartDashboard.getNumber("Bottom Hopper Speed", .3)*speedB, SmartDashboard.getNumber("Top Hopper Speed", .3)*speedT);
+            setIndvWheelSpeed(SmartDashboard.getNumber("Bottom Hopper Speed", .45)*speedB, SmartDashboard.getNumber("Top Hopper Speed", .65)*speedT);
         },
         () -> {
           stop();

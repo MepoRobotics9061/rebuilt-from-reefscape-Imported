@@ -15,7 +15,6 @@ import frc.robot.Constants;
 import frc.robot.autos.Autos;
 import frc.robot.commands.LimeLightCenterATagCommand;
 import frc.robot.commands.DriveWithJoysticks;
-import frc.robot.commands.GameCommands;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.commands.TeleopSwerveLimit;
 import frc.robot.subsystems.RobotIntake;
@@ -46,8 +45,6 @@ public class RobotContainer {
   private final Swerve s_Swerve = new Swerve(m_robotCamera); 
   
   /* Commands */
-  private final GameCommands m_gameCommands;
-
   private final Autos m_autos;
 
   private final SendableChooser<Command> m_autoChooser;
@@ -59,17 +56,8 @@ public class RobotContainer {
 
   public RobotContainer() {
 
-    m_gameCommands = new GameCommands(
-      m_robotIntake,
-      m_robotIntakePivot,
-      m_robotCamera,
-      m_robotLaunchChain,
-      m_robotClimber,
-      s_Swerve
-    );
-
     m_autos = new Autos(
-      m_gameCommands, m_robotClimber, m_robotIntakePivot
+      m_robotClimber, m_robotIntake, m_robotIntakePivot, m_robotLaunchChain, m_robotCamera, s_Swerve
     );
 
     m_autoChooser = new SendableChooser<Command>();
@@ -130,7 +118,7 @@ public class RobotContainer {
     );
     
     operator.button(Constants.Controller.Start).whileTrue(
-      m_robotLaunchChain.launch(-.1)
+      m_robotLaunchChain.push(-.1)
     );
 
     operator.button(Constants.Controller.Y).whileTrue(
@@ -163,11 +151,11 @@ public class RobotContainer {
 
   private void configureAutos() {
     m_autoChooser.addOption("1", m_autos.autoCommand1());
-    m_autoChooser.addOption("2", m_autos.autoCommand2());
-    m_autoChooser.addOption("3", m_autos.autoCommand3());
-    m_autoChooser.addOption("TEST", m_autos.autoCommandTEST());
+    // m_autoChooser.addOption("2", m_autos.autoCommand2());
+    // m_autoChooser.addOption("3", m_autos.autoCommand3());
+    // m_autoChooser.addOption("TEST", m_autos.autoCommandTEST());
 
-    m_autoChooser.setDefaultOption("2", m_autos.autoCommand2());
+    m_autoChooser.setDefaultOption("2", m_autos.autoCommand1());
 
     SmartDashboard.putData("AutoCommand", m_autoChooser);
   }
