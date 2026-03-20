@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-// import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 public class RobotClimber extends SubsystemBase {
 
   SparkMax Climber;
@@ -17,7 +17,11 @@ public class RobotClimber extends SubsystemBase {
 
   private double GravityOffset = -0.06;
 
-  private double PositionForClimb = -5;
+  private double targetPosition = -5;
+
+  private double angleOffset = 0;
+
+  private boolean isAuto = false;
 
   public RobotClimber() {
     final int pivotWheelDeviceID = 11;
@@ -57,20 +61,21 @@ public class RobotClimber extends SubsystemBase {
       if(targetSpeed > .2) {
         targetSpeed = .2;
       }
+
       setSpeed(targetSpeed);
     }
 
-    // public Command ClimberMove(double speed) {
-    //   return this.runEnd(
-    //       () -> {
-    //          System.out.println("runClimberMove: RUNNING" + speed);
-    //   setSpeed(speed);
-    //       }, 
-    //       () -> {
-    //         stop();
-    //       }
-    //   );
-    // }
+    public Command ClimberMove(double speed) {
+      return this.runEnd(
+          () -> {
+             System.out.println("runClimberMove: RUNNING" + speed);
+      setSpeed(speed);
+          }, 
+          () -> {
+            stop();
+          }
+      );
+    }
 
 
     public void setSpeed(double speed) {
@@ -94,8 +99,9 @@ public class RobotClimber extends SubsystemBase {
     }
 
   @Override public void periodic() {
-    ClimberEncoderSmartDashboardValue = ClimberEncoder.getPosition();
-    SmartDashboard.putNumber("Elevator Encoder", ClimberEncoderSmartDashboardValue);
+    ClimberEncoderValue = ClimberEncoder.getPosition();
+    SmartDashboard.putNumber("Elevator Encoder", ClimberEncoderValue);
+
  
     
   }
