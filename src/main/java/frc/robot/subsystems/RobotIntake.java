@@ -6,7 +6,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,8 +15,6 @@ public class RobotIntake extends SubsystemBase {
 
   private SparkMaxConfig configWheel;
 
-  private DigitalInput limitSwitch;
-
   public RobotIntake() {
     final int wheelDeviceID = 12;
     wheel = new SparkMax(wheelDeviceID, MotorType.kBrushless);
@@ -25,7 +22,6 @@ public class RobotIntake extends SubsystemBase {
     configWheel.smartCurrentLimit(40);
     configWheel.idleMode(IdleMode.kBrake);
     wheel.configure(configWheel, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    limitSwitch = new DigitalInput(6);
   }
 
   public Command launch(double speed) {
@@ -42,11 +38,7 @@ public class RobotIntake extends SubsystemBase {
   public Command intake(double speed) {
     return this.runEnd(
         () -> {
-          // if(limitSwitch.get() == false) {
-            setWheelSpeed(speed);
-          // } else {
-          //   stop();
-          // }
+          setWheelSpeed(speed);
         },
         () -> {
           stop();

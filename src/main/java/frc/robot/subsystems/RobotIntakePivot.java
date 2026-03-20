@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-// import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -41,66 +40,61 @@ public class RobotIntakePivot extends SubsystemBase {
     }
 
     public Command pivotPositionSet(DoubleSupplier fuelPivotPoint) {
-      return this.runEnd(
-        () -> {
-            SmartDashboard.putNumber("Fuel Pivot Point", fuelPivotPoint.getAsDouble());
-        },
-        () -> {
+      return this.runEnd(() -> {
+          SmartDashboard.putNumber("Fuel Pivot Point", fuelPivotPoint.getAsDouble());
+        }, () -> {
           stop();
         }
       );
     }
 
     public Command manualPivotMove(double targetAngle) {
-      return this.runEnd(
-          () -> {
+      return this.runEnd(() -> {
   
-              SmartDashboard.putNumber("Fuel Pivot Point", targetAngle);
+        SmartDashboard.putNumber("Fuel Pivot Point", targetAngle);
       
-              double targetSpeed = (targetAngle - pivotEncoderValue) * gain + gravitySpeed;
+        double targetSpeed = (targetAngle - pivotEncoderValue) * gain + gravitySpeed;
 
-              if(targetSpeed < maxNegSpeed) {
-                targetSpeed = maxNegSpeed;
-              }
-              if(targetSpeed > maxPosSpeed) {
-                targetSpeed = maxPosSpeed;
-              }
+        if(targetSpeed < maxNegSpeed) {
+          targetSpeed = maxNegSpeed;
+        }
+        if(targetSpeed > maxPosSpeed) {
+          targetSpeed = maxPosSpeed;
+        }
 
-              if (targetAngle > 6 && pivotEncoderValue > 6) {
-                setSpeed(.03);
-              } else {
-                setSpeed(targetSpeed);
-              }
-              
-SmartDashboard.putNumber("Fuel Pivot SetSpeed", targetSpeed);
-          },
-          () -> {
+        if (targetAngle > 6 && pivotEncoderValue > 6) {
+          setSpeed(.03);
+        } else {
+          setSpeed(targetSpeed);
+        }
+        
+        SmartDashboard.putNumber("Fuel Pivot SetSpeed", targetSpeed);
+          }, () -> {
             stop();
           }
         );
     }
 
-        public void voidPivotMove(double targetAngle) {
- 
-              SmartDashboard.putNumber("Fuel Pivot Point", targetAngle);
-      
-              double targetSpeed = (targetAngle - pivotEncoderValue) * gain + gravitySpeed;
+    public void voidPivotMove(double targetAngle) {
 
-              if(targetSpeed < maxNegSpeed) {
-                targetSpeed = maxNegSpeed;
-              }
-              if(targetSpeed > maxPosSpeed) {
-                targetSpeed = maxPosSpeed;
-              }
-              setSpeed(targetSpeed);
-              SmartDashboard.putNumber("Fuel Pivot SetSpeed", targetSpeed);
+      SmartDashboard.putNumber("Fuel Pivot Point", targetAngle);
+
+      double targetSpeed = (targetAngle - pivotEncoderValue) * gain + gravitySpeed;
+
+      if(targetSpeed < maxNegSpeed) {
+        targetSpeed = maxNegSpeed;
+      }
+      if(targetSpeed > maxPosSpeed) {
+        targetSpeed = maxPosSpeed;
+      }
+      setSpeed(targetSpeed);
+      SmartDashboard.putNumber("Fuel Pivot SetSpeed", targetSpeed);
 
     }
 
     
     public Command testingSpeed(double speed) {
-      return this.runEnd(
-        () -> {
+      return this.runEnd(() -> {
           setSpeed(speed);
         }, () -> {
           stop();
