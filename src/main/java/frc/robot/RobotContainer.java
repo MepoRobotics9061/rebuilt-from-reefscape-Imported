@@ -108,6 +108,14 @@ public class RobotContainer {
       m_robotIntake.launch(.1)
     );
 
+    operator.povUp().whileTrue(
+      m_robotClimber.manualClimberMove(-80)
+    );
+
+    operator.povDown().whileTrue(
+      m_robotClimber.manualClimberMove(10)
+    );
+
     /*
     The two m_robotLaunchChain commands need check to make sure the buttons are right.
     Start should slowly push the fuel backwards while RB should be the primary fire.

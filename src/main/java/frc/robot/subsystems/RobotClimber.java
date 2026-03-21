@@ -1,8 +1,13 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,22 +16,21 @@ public class RobotClimber extends SubsystemBase {
 
   SparkMax Climber;
 
+  private SparkMaxConfig configWheel;
+
   private RelativeEncoder ClimberEncoder;
 
-  private double ClimberEncoderSmartDashboardValue;
-
   private double GravityOffset = -0.06;
-
-  private double targetPosition = -5;
-
-  private double angleOffset = 0;
-
-  private boolean isAuto = false;
 
   public RobotClimber() {
     final int pivotWheelDeviceID = 11;
     Climber = new SparkMax(pivotWheelDeviceID, MotorType.kBrushless);
+    configWheel = new SparkMaxConfig();
+    configWheel.smartCurrentLimit(20);
+    configWheel.idleMode(IdleMode.kBrake);
+    Climber.configure(configWheel, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     ClimberEncoder = Climber.getEncoder();
+
     }
 
     public Command manualClimberMove(double manualPosition) {
@@ -43,6 +47,7 @@ public class RobotClimber extends SubsystemBase {
     public Command manualClimberMoveSet(double manualPosition) {
       return this.runEnd(
           () -> {
+            System.out.println(": RUNNING");
             voidClimberMove(manualPosition);
           },
           () -> {
@@ -52,16 +57,16 @@ public class RobotClimber extends SubsystemBase {
     }
   
     public void voidClimberMove(double manualPosition) {
-      
-      double targetSpeed = (manualPosition - ClimberEncoderSmartDashboardValue) * .2 + GravityOffset;
+ System.out.println("void climbermove: RUNNING");
+      double targetSpeed = (manualPosition - ClimberEncoder.getPosition()) * .2 + GravityOffset;
 
-      if(targetSpeed < -.5) {
-        targetSpeed = -.5;
+      if(targetSpeed < -.3) {
+        targetSpeed = -.3;
       }
-      if(targetSpeed > .2) {
-        targetSpeed = .2;
+      if(targetSpeed > .1) {
+        targetSpeed = .1;
       }
-
+ SmartDashboard.putNumber("Climb output", targetSpeed);
       setSpeed(targetSpeed);
     }
 
@@ -91,16 +96,15 @@ public class RobotClimber extends SubsystemBase {
     }
 
     public void setPosition(double position) {
-      PositionForClimb = position;
+      //PositionForClimb = position;
     }
 
-    public boolean inPosition() {
-      return Math.abs(PositionForClimb - ClimberEncoderSmartDashboardValue) < .5;
-    }
+    //public boolean inPosition() {
+      //return Math.abs(PositionForClimb - ClimberEncoderSmartDashboardValue) < .5;
+    //}
 
   @Override public void periodic() {
-    ClimberEncoderValue = ClimberEncoder.getPosition();
-    SmartDashboard.putNumber("Elevator Encoder", ClimberEncoderValue);
+    SmartDashboard.putNumber("Elevator Encoder", (ClimberEncoder.getPosition()));
 
  
     
