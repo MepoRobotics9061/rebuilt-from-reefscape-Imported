@@ -31,8 +31,7 @@ public class RobotIntake extends SubsystemBase {
         },
         () -> {
           stop();
-        }
-    );
+        });
   }
 
   public Command intake(double speed) {
@@ -42,8 +41,7 @@ public class RobotIntake extends SubsystemBase {
         },
         () -> {
           stop();
-        }
-    );
+        });
   }
 
   public void setWheelSpeed(double speed) {

@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,7 +13,7 @@ public class RobotLaunchChain extends SubsystemBase {
   SparkMax topWheel;
 
   public RobotLaunchChain() {
-      //Hopper Wheels
+    // Hopper Wheels
     final int bottomWheelDeviceID = 13;
     final int topWheelDeviceID = 14;
     bottomWheel = new SparkMax(bottomWheelDeviceID, MotorType.kBrushless);
@@ -24,34 +23,32 @@ public class RobotLaunchChain extends SubsystemBase {
   public Command push(double speed) {
     return this.runEnd(
         () -> {
-            setHopperSpeed(speed);
+          setHopperSpeed(speed);
         },
         () -> {
           stop();
-        }
-      );
+        });
   }
 
   public Command fire(double speed) {
     return this.runEnd(
         () -> {
-            setHopperSpeed(-speed);
+          setHopperSpeed(-speed);
         },
         () -> {
           stop();
-        }
-      );
+        });
   }
 
-    public Command indvSpeedCommand(double speedB, double speedT) {
+  public Command indvSpeedCommand(double speedB, double speedT) {
     return this.runEnd(
         () -> {
-            setIndvWheelSpeed(SmartDashboard.getNumber("Bottom Hopper Speed", .45)*speedB, SmartDashboard.getNumber("Top Hopper Speed", .65)*speedT);
+          setIndvWheelSpeed(SmartDashboard.getNumber("Bottom Hopper Speed", .45) * speedB,
+              SmartDashboard.getNumber("Top Hopper Speed", .65) * speedT);
         },
         () -> {
           stop();
-        }
-      );
+        });
   }
 
   public void setHopperSpeed(double speed) {
@@ -59,7 +56,7 @@ public class RobotLaunchChain extends SubsystemBase {
     topWheel.set(-speed);
   }
 
-    public void setIndvWheelSpeed(double speedB, double speedT) {
+  public void setIndvWheelSpeed(double speedB, double speedT) {
     bottomWheel.set(speedB);
     topWheel.set(-speedT);
   }
