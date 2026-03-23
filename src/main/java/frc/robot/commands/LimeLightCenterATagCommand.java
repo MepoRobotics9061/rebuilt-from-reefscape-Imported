@@ -7,7 +7,7 @@ public class LimeLightCenterATagCommand extends Command {
   private Swerve s_Swerve;
 
   public LimeLightCenterATagCommand(
-  Swerve s_Swerve){
+      Swerve s_Swerve) {
     this.s_Swerve = s_Swerve;
     addRequirements(s_Swerve);
   }

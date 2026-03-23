@@ -24,93 +24,90 @@ public class RobotIntakePivot extends SubsystemBase {
 
   private double targetPosition;
 
-   private double gravitySpeed = -0.04;
-   private double gain = .14;
-   private double maxPosSpeed = .08;
-   private double maxNegSpeed = -.13;
+  private double gravitySpeed = -0.04;
+  private double gain = .14;
+  private double maxPosSpeed = .08;
+  private double maxNegSpeed = -.13;
 
   public RobotIntakePivot() {
     final int pivotWheelDeviceID = 16;
     pivotWheel = new SparkMax(pivotWheelDeviceID, MotorType.kBrushless);
     configWheel = new SparkMaxConfig();
     configWheel.smartCurrentLimit(40);
-     configWheel.idleMode(IdleMode.kCoast);
+    configWheel.idleMode(IdleMode.kCoast);
     pivotWheel.configure(configWheel, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     pivotEncoder = pivotWheel.getEncoder();
-    }
+  }
 
-    public Command pivotPositionSet(DoubleSupplier fuelPivotPoint) {
-      return this.runEnd(() -> {
-          SmartDashboard.putNumber("Fuel Pivot Point", fuelPivotPoint.getAsDouble());
-        }, () -> {
-          stop();
-        }
-      );
-    }
+  public Command pivotPositionSet(DoubleSupplier fuelPivotPoint) {
+    return this.runEnd(() -> {
+      SmartDashboard.putNumber("Fuel Pivot Point", fuelPivotPoint.getAsDouble());
+    }, () -> {
+      stop();
+    });
+  }
 
-    public Command manualPivotMove(double targetAngle) {
-      return this.runEnd(() -> {
-  
-        SmartDashboard.putNumber("Fuel Pivot Point", targetAngle);
-      
-        double targetSpeed = (targetAngle - pivotEncoderValue) * gain + gravitySpeed;
-
-        if(targetSpeed < maxNegSpeed) {
-          targetSpeed = maxNegSpeed;
-        }
-        if(targetSpeed > maxPosSpeed) {
-          targetSpeed = maxPosSpeed;
-        }
-
-        if (targetAngle > 6 && pivotEncoderValue > 6) {
-          setSpeed(.03);
-        } else {
-          setSpeed(targetSpeed);
-        }
-        
-        SmartDashboard.putNumber("Fuel Pivot SetSpeed", targetSpeed);
-          }, () -> {
-            stop();
-          }
-        );
-    }
-
-    public void voidPivotMove(double targetAngle) {
+  public Command manualPivotMove(double targetAngle) {
+    return this.runEnd(() -> {
 
       SmartDashboard.putNumber("Fuel Pivot Point", targetAngle);
 
       double targetSpeed = (targetAngle - pivotEncoderValue) * gain + gravitySpeed;
 
-      if(targetSpeed < maxNegSpeed) {
+      if (targetSpeed < maxNegSpeed) {
         targetSpeed = maxNegSpeed;
       }
-      if(targetSpeed > maxPosSpeed) {
+      if (targetSpeed > maxPosSpeed) {
         targetSpeed = maxPosSpeed;
       }
-      setSpeed(targetSpeed);
+
+      if (targetAngle > 6 && pivotEncoderValue > 6) {
+        setSpeed(.03);
+      } else {
+        setSpeed(targetSpeed);
+      }
+
       SmartDashboard.putNumber("Fuel Pivot SetSpeed", targetSpeed);
+    }, () -> {
+      stop();
+    });
+  }
 
-    }
+  public void voidPivotMove(double targetAngle) {
 
-    
-    public Command testingSpeed(double speed) {
-      return this.runEnd(() -> {
-          setSpeed(speed);
-        }, () -> {
-          stop();
-        }
-      );
-    }
-  
-    public void setSpeed(double speed) {
-      pivotWheel.set(speed);
-    }
-  
-    public void stop() {
-      pivotWheel.set(0);
-    }
+    SmartDashboard.putNumber("Fuel Pivot Point", targetAngle);
 
-  @Override public void periodic() {
+    double targetSpeed = (targetAngle - pivotEncoderValue) * gain + gravitySpeed;
+
+    if (targetSpeed < maxNegSpeed) {
+      targetSpeed = maxNegSpeed;
+    }
+    if (targetSpeed > maxPosSpeed) {
+      targetSpeed = maxPosSpeed;
+    }
+    setSpeed(targetSpeed);
+    SmartDashboard.putNumber("Fuel Pivot SetSpeed", targetSpeed);
+
+  }
+
+  public Command testingSpeed(double speed) {
+    return this.runEnd(() -> {
+      setSpeed(speed);
+    }, () -> {
+      stop();
+    });
+  }
+
+  public void setSpeed(double speed) {
+    pivotWheel.set(speed);
+  }
+
+  public void stop() {
+    pivotWheel.set(0);
+  }
+
+  @Override
+  public void periodic() {
     pivotEncoderValue = pivotEncoder.getPosition();
     SmartDashboard.putNumber("Fuel Pivot Encoder", pivotEncoderValue);
     targetPosition = SmartDashboard.getNumber("Fuel Pivot Point", 0);

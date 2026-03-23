@@ -9,8 +9,7 @@ public class RotateUntilCommand extends Command {
   private DoubleSupplier angle;
 
   public RotateUntilCommand(
-  Swerve s_Swerve, DoubleSupplier angle
-  ){
+      Swerve s_Swerve, DoubleSupplier angle) {
     this.s_Swerve = s_Swerve;
     this.angle = angle;
     addRequirements(s_Swerve);

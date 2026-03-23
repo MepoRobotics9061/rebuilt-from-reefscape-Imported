@@ -7,7 +7,7 @@ public class LimeLightCoralPrepCommand extends Command {
   private Swerve s_Swerve;
 
   public LimeLightCoralPrepCommand(
-  Swerve s_Swerve){
+      Swerve s_Swerve) {
     this.s_Swerve = s_Swerve;
     addRequirements(s_Swerve);
   }

@@ -72,47 +72,41 @@ public class Swerve extends SubsystemBase {
     }
   }
 
-
-
-    /**
-   * Main controlling method for driving swerve based on desired speed of drivetrian
+  /**
+   * Main controlling method for driving swerve based on desired speed of
+   * drivetrian
+   * 
    * @param chassisSpeeds Desired speed of drivetrain
    */
   public void drive2(ChassisSpeeds chassisSpeeds) {
 
-
-    
     SwerveModuleState[] states = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
-
-
-
 
     setModuleStates2(states);
   }
 
   /**
    * Set the desired state of all the modules
+   * 
    * @param states Desired module states
    */
-  public void setModuleStates2(SwerveModuleState[] states){
+  public void setModuleStates2(SwerveModuleState[] states) {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND);
-    mSwerveMods[0].setDesiredState(states[0],true);
-    mSwerveMods[1].setDesiredState(states[1],true);
-    mSwerveMods[2].setDesiredState(states[2],true); 
-    mSwerveMods[3].setDesiredState(states[3],true); 
+    mSwerveMods[0].setDesiredState(states[0], true);
+    mSwerveMods[1].setDesiredState(states[1], true);
+    mSwerveMods[2].setDesiredState(states[2], true);
+    mSwerveMods[3].setDesiredState(states[3], true);
   }
 
-
-    /**
+  /**
    * Stops all movement for swerve modules
    */
-  public void stop(){
+  public void stop() {
     mSwerveMods[0].stop();
     mSwerveMods[1].stop();
     mSwerveMods[2].stop();
     mSwerveMods[3].stop();
   }
-
 
   public void centerATagVoid() {
     drive(new Translation2d(0, m_robotCamera.tagX / 40), gyroATagSpinAmount, false, true);
@@ -120,35 +114,49 @@ public class Swerve extends SubsystemBase {
 
   public void coralPrepVoid() {
     if (m_robotCamera.tagArea != 0) {
-    //  drive(new Translation2d(-(10 - m_robotCamera.tagArea) / 20, m_robotCamera.tagX / 40), gyroATagSpinAmount / 2 ,
-    var xSp = 0.0;
-    xSp = (15.5 - tagDistance) / 120;
-    if (xSp > 0.12) { xSp = 0.12;}
-    if (xSp < -0.12) { xSp = -0.12;}
-    System.out.println(xSp);
+      // drive(new Translation2d(-(10 - m_robotCamera.tagArea) / 20,
+      // m_robotCamera.tagX / 40), gyroATagSpinAmount / 2 ,
+      var xSp = 0.0;
+      xSp = (15.5 - tagDistance) / 120;
+      if (xSp > 0.12) {
+        xSp = 0.12;
+      }
+      if (xSp < -0.12) {
+        xSp = -0.12;
+      }
+      System.out.println(xSp);
 
-    var sideSp = 0.0;
-    sideSp = m_robotCamera.tagX / 120;
-    if (sideSp > 0.1) { sideSp = 0.1;}
-    if (sideSp < -0.1) { sideSp = -0.1;}
-    System.out.println("side");
-    System.out.println(sideSp);
+      var sideSp = 0.0;
+      sideSp = m_robotCamera.tagX / 120;
+      if (sideSp > 0.1) {
+        sideSp = 0.1;
+      }
+      if (sideSp < -0.1) {
+        sideSp = -0.1;
+      }
+      System.out.println("side");
+      System.out.println(sideSp);
 
-    drive(new Translation2d(xSp, sideSp), gyroATagSpinAmount / 2 ,
-      false, true);
+      drive(new Translation2d(xSp, sideSp), gyroATagSpinAmount / 2,
+          false, true);
     }
   }
 
   public void algaePrepVoid() {
     if (m_robotCamera.tagArea != 0) {
-     // drive(new Translation2d(-(14 - m_robotCamera.tagArea) / 20, m_robotCamera.tagX / 40), gyroATagSpinAmount / 2,
-     var xSp = 0.0;
-     xSp = (15.5 - tagDistance) / 120;
-     if (xSp > 0.1) { xSp = 0.1;}
-     if (xSp < -0.1) { xSp = -0.1;}
-    
-     drive(new Translation2d(xSp, m_robotCamera.tagX / 120), gyroATagSpinAmount / 2, 
-      false, true);
+      // drive(new Translation2d(-(14 - m_robotCamera.tagArea) / 20,
+      // m_robotCamera.tagX / 40), gyroATagSpinAmount / 2,
+      var xSp = 0.0;
+      xSp = (15.5 - tagDistance) / 120;
+      if (xSp > 0.1) {
+        xSp = 0.1;
+      }
+      if (xSp < -0.1) {
+        xSp = -0.1;
+      }
+
+      drive(new Translation2d(xSp, m_robotCamera.tagX / 120), gyroATagSpinAmount / 2,
+          false, true);
     }
   }
 
@@ -156,11 +164,11 @@ public class Swerve extends SubsystemBase {
 
     double rotateErrorAmount = gyroValue - desiredAngle;
 
-    if(rotateErrorAmount > 180) {
+    if (rotateErrorAmount > 180) {
       rotateErrorAmount -= 360;
     }
 
-    if(rotateErrorAmount < -180) {
+    if (rotateErrorAmount < -180) {
       rotateErrorAmount += 360;
     }
 
@@ -225,12 +233,12 @@ public class Swerve extends SubsystemBase {
 
   public Rotation2d getYawField() {
     return (Constants.Swerve.invertGyro)
-        ? Rotation2d.fromDegrees(360 - gyro.getYaw()+180)
-        : Rotation2d.fromDegrees(gyro.getYaw()+180);
+        ? Rotation2d.fromDegrees(360 - gyro.getYaw() + 180)
+        : Rotation2d.fromDegrees(gyro.getYaw() + 180);
   }
 
   // public double rotateUntilAmount(double desiredAngle) {
-  //   return 180 - desiredAngle;
+  // return 180 - desiredAngle;
   // }
 
   @Override
@@ -243,22 +251,21 @@ public class Swerve extends SubsystemBase {
           "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
-            SmartDashboard.putNumber(
+      SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " getAngle", mod.getAngleD());
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
 
-    //gyroValue = gyro.getYaw() + 180;
-    gyroValue = gyro.getYaw() ;
-
+    // gyroValue = gyro.getYaw() + 180;
+    gyroValue = gyro.getYaw();
 
     SmartDashboard.putNumber(
         "Gyro", gyroValue);
 
     double errorAmount = m_robotCamera.spinAmount - gyroValue;
 
-    tagDistance = 14/Math.tan((23 + m_robotCamera.tagY)/57.29577)/3;
+    tagDistance = 14 / Math.tan((23 + m_robotCamera.tagY) / 57.29577) / 3;
 
     SmartDashboard.putNumber("Tag Distance", tagDistance);
 

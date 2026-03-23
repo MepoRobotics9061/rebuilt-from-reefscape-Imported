@@ -40,21 +40,16 @@ public class TeleopSwerveLimit extends Command {
 
   @Override
   public void execute() {
-    /* Get Values, Deadband*/
+    /* Get Values, Deadband */
 
-    double speedMult = ((speedSup.getAsDouble()+1.0) / 3.0)+ 0.33;
+    double speedMult = ((speedSup.getAsDouble() + 1.0) / 3.0) + 0.33;
 
-    double translationVal =
-        translationLimiter.calculate(
-          MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.stickDeadband));
-    double strafeVal =
-        strafeLimiter.calculate(
-            MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband));
-    double rotationVal =
-        rotationLimiter.calculate(
-            MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.Swerve.stickDeadband));
-
- 
+    double translationVal = translationLimiter.calculate(
+        MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.Swerve.stickDeadband));
+    double strafeVal = strafeLimiter.calculate(
+        MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband));
+    double rotationVal = rotationLimiter.calculate(
+        MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.Swerve.stickDeadband));
 
     /* Drive */
     s_Swerve.drive(
@@ -66,6 +61,6 @@ public class TeleopSwerveLimit extends Command {
 
   // @Override
   // public Command zeroGyroCommand(){
-  //   return this.run(() -> {gyro.zeroYaw();});
+  // return this.run(() -> {gyro.zeroYaw();});
   // }
 }

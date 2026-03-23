@@ -22,7 +22,7 @@ import frc.robot.subsystems.Swerve;
 public class DriveWithJoysticks extends Command {
 
   private final Swerve swerveSubsystem;
- // private final PoseEstimator poseEstimator;
+  // private final PoseEstimator poseEstimator;
 
   private final DoubleSupplier translationX;
   private final DoubleSupplier translationY;
@@ -32,11 +32,14 @@ public class DriveWithJoysticks extends Command {
 
   private final SlewRateLimiter xLimiter, yLimiter, turnLimiter;
 
-  //public DriveWithJoysticks(Swerve swerveSubsystem, PoseEstimator poseEstimator, DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier rotation, BooleanSupplier relative, DoubleSupplier maxSpeed) {
-   
-    public DriveWithJoysticks(Swerve swerveSubsystem, DoubleSupplier translationX, DoubleSupplier translationY, DoubleSupplier rotation, BooleanSupplier relative, DoubleSupplier maxSpeed) {
+  // public DriveWithJoysticks(Swerve swerveSubsystem, PoseEstimator
+  // poseEstimator, DoubleSupplier translationX, DoubleSupplier translationY,
+  // DoubleSupplier rotation, BooleanSupplier relative, DoubleSupplier maxSpeed) {
+
+  public DriveWithJoysticks(Swerve swerveSubsystem, DoubleSupplier translationX, DoubleSupplier translationY,
+      DoubleSupplier rotation, BooleanSupplier relative, DoubleSupplier maxSpeed) {
     this.swerveSubsystem = swerveSubsystem;
-   // this.poseEstimator = poseEstimator;
+    // this.poseEstimator = poseEstimator;
     this.translationX = translationX;
     this.translationY = translationY;
     this.rotation = rotation;
@@ -50,7 +53,8 @@ public class DriveWithJoysticks extends Command {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
   public void execute() {
@@ -58,34 +62,44 @@ public class DriveWithJoysticks extends Command {
     SmartDashboard.putNumber("Joy X", translationY.getAsDouble());
     SmartDashboard.putNumber("Joy Rot", rotation.getAsDouble());
 
-
     // if(relative.getAsBoolean()){
-    //   swerveSubsystem.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
-    //   modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-    //   modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-    //   modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
-    //   poseEstimator.getPoseRotation()
+    // swerveSubsystem.drive(ChassisSpeeds.fromFieldRelativeSpeeds(
+    // modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) *
+    // Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+    // modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter) *
+    // Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+    // modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) *
+    // Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
+    // poseEstimator.getPoseRotation()
     // ));
     // } else {
-    //   swerveSubsystem.drive2(new ChassisSpeeds(
-    //   modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-    //   modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-    //   modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+    // swerveSubsystem.drive2(new ChassisSpeeds(
+    // modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) *
+    // Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+    // modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter) *
+    // Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+    // modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) *
+    // Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
     // }
 
-      //      swerveSubsystem.drive2(new ChassisSpeeds(
-      // modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-      //  modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-      //  modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
-  
-             swerveSubsystem.drive2(ChassisSpeeds.fromFieldRelativeSpeeds(
-      modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-       modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-       modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-       ,swerveSubsystem.getYawField()));
-  
-  
-      }
+    // swerveSubsystem.drive2(new ChassisSpeeds(
+    // modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) *
+    // Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+    // modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter) *
+    // Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+    // modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) *
+    // Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
+
+    swerveSubsystem.drive2(ChassisSpeeds.fromFieldRelativeSpeeds(
+        modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter)
+            * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+        modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter)
+            * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+        modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter)
+            * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,
+        swerveSubsystem.getYawField()));
+
+  }
 
   @Override
   public void end(boolean interrupted) {
@@ -99,17 +113,19 @@ public class DriveWithJoysticks extends Command {
 
   /**
    * Applies various modifications to the input (also squares the joystick input)
-   * @param value the input of the joystick
+   * 
+   * @param value         the input of the joystick
    * @param speedModifyer how much to slow the joystick down by
-   * @param limiter how much to slow the inputs down by
+   * @param limiter       how much to slow the inputs down by
    * @return the modified joystick values
    */
-  private double modifyAxis(double value, double speedModifyer, SlewRateLimiter limiter){
+  private double modifyAxis(double value, double speedModifyer, SlewRateLimiter limiter) {
     value = MathUtil.applyDeadband(value, 0.02);
     value = Math.copySign(value * value, value);
-    value = value*speedModifyer;
+    value = value * speedModifyer;
     value = limiter.calculate(value);
-    if(Math.abs(value)*Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND <= Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND*0.01){
+    if (Math.abs(value)
+        * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND <= Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND * 0.01) {
       value = 0.0;
     }
     return value;
