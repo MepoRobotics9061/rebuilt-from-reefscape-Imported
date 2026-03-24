@@ -18,9 +18,9 @@ import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
 import frc.lib.math.Conversions;
 
-
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,8 +34,7 @@ public class SwerveModule {
   private Rotation2d lastAngle;
   private Rotation2d angleOffset;
 
-
-  private  TalonFX angleMotor; 
+  private TalonFX angleMotor;
   private SparkFlex driveMotor;
 
   private RelativeEncoder driveEncoder;
@@ -43,16 +42,15 @@ public class SwerveModule {
   private CANcoder angleEncoder;
 
   private final SparkClosedLoopController driveController;
-  //private final SparkClosedLoopController angleController;
+  // private final SparkClosedLoopController angleController;
 
   private SparkFlexConfig configDrive;
   private SparkFlexConfig configAngle;
 
   private PositionVoltage angleSetter = new PositionVoltage(0);
 
-  private final SimpleMotorFeedforward feedforward =
-      new SimpleMotorFeedforward(
-          Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
+  private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(
+      Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
   public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
     this.moduleNumber = moduleNumber;
@@ -60,22 +58,22 @@ public class SwerveModule {
 
     /* Angle Encoder Config */
     angleEncoder = new CANcoder(moduleConstants.cancoderID);
-    //angleEncoder = new DutyCycleEncoder(moduleConstants.cancoderID);
-    //configAngleEncoder();
-   
+    // angleEncoder = new DutyCycleEncoder(moduleConstants.cancoderID);
+    // configAngleEncoder();
 
     /* Angle Motor Config */
-   // angleMotor = new SparkMax(moduleConstants.angleMotorID, MotorType.kBrushless);
+    // angleMotor = new SparkMax(moduleConstants.angleMotorID,
+    // MotorType.kBrushless);
 
-    angleMotor= new TalonFX(moduleConstants.angleMotorID, "rio");
+    angleMotor = new TalonFX(moduleConstants.angleMotorID, "rio");
 
     var angleConfiguration = new TalonFXConfiguration();
     configAngleMotorTalon(moduleConstants.cancoderID);
 
-    //integratedAngleEncoder = angleMotor.getEncoder();
-    //angleController = angleMotor.getClosedLoopController();
-    //configAngle = new SparkMaxConfig();
-    //configAngleMotor();
+    // integratedAngleEncoder = angleMotor.getEncoder();
+    // angleController = angleMotor.getClosedLoopController();
+    // configAngle = new SparkMaxConfig();
+    // configAngleMotor();
 
     /* Drive Motor Config */
     driveMotor = new SparkFlex(moduleConstants.driveMotorID, MotorType.kBrushless);
@@ -88,13 +86,13 @@ public class SwerveModule {
   }
 
   public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
-    // Custom optimize command, since default WPILib optimize assumes continuous controller which
+    // Custom optimize command, since default WPILib optimize assumes continuous
+    // controller which
     // REV and CTRE are not
 
-    //desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
+    // desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
 
-
-    if (moduleNumber == 1){
+    if (moduleNumber == 1) {
       SmartDashboard.putString("Mod 1 cur angle", getState().angle.toString());
       SmartDashboard.putString("Mod 1 desired angle", desiredState.angle.toString());
     }
@@ -104,71 +102,75 @@ public class SwerveModule {
   }
 
   private void resetToAbsolute() {
-    //double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
-    //integratedAngleEncoder.setPosition(absolutePosition);
+    // double absolutePosition = getCanCoder().getDegrees() -
+    // angleOffset.getDegrees();
+    // integratedAngleEncoder.setPosition(absolutePosition);
 
     double test = (getCanCoder().getDegrees() - angleOffset.getDegrees());
 
-    double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
-    //angleMotor.setSelectedSensorPosition(absolutePosition);
+    double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(),
+        Constants.Swerve.angleGearRatio);
+    // angleMotor.setSelectedSensorPosition(absolutePosition);
     Timer.delay(0.5);
     angleMotor.setPosition(test / 360);
-    
-    
-    System.out.println("get cancoder " + getCanCoder().getDegrees() );  
-    System.out.println("get offset " + angleOffset.getDegrees());  
+
+    System.out.println("get cancoder " + getCanCoder().getDegrees());
+    System.out.println("get offset " + angleOffset.getDegrees());
     System.out.println("reset to absolute " + test);
 
   }
 
   private void configAngleEncoder() {
-    //angleEncoder.configFactoryDefault();
-    //CANCoderUtil.setCANCoderBusUsage(angleEncoder, CCUsage.kMinimal);
-    //angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
-    //angleEncoder.setDistancePerRotation(360.0);
+    // angleEncoder.configFactoryDefault();
+    // CANCoderUtil.setCANCoderBusUsage(angleEncoder, CCUsage.kMinimal);
+    // angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
+    // angleEncoder.setDistancePerRotation(360.0);
   }
 
-    /*Configure settings for the steering motor*/
-  
-    private void configAngleMotorTalon(int cancoderID) {
-        angleMotor.getConfigurator().apply(new TalonFXConfiguration());
-        var talonfxConfigs = new TalonFXConfiguration();
-        talonfxConfigs.Slot0.kV = 0.0;
-        talonfxConfigs.Slot0.kS = 0.0;
-        talonfxConfigs.Slot0.kP =Constants.Swerve.angleKP;
-        talonfxConfigs.Slot0.kI = Constants.Swerve.angleKI;
-        talonfxConfigs.Slot0.kD = Constants.Swerve.angleKD;
-        talonfxConfigs.ClosedLoopGeneral.ContinuousWrap = true;
-        talonfxConfigs.CurrentLimits.SupplyCurrentLimit = Constants.Swerve.angleContinuousCurrentLimit;
-        talonfxConfigs.CurrentLimits.SupplyCurrentLimitEnable = Constants.Swerve.angleEnableCurrentLimit;
-        //talonfxConfigs.CurrentLimits.SupplyCurrentThreshold = Constants.Swerve.anglePeakCurrentLimit;
-        //talonfxConfigs.CurrentLimits.SupplyTimeThreshold = Constants.Swerve.anglePeakCurrentDuration;
-        talonfxConfigs.Voltage.PeakForwardVoltage = 10;
-        talonfxConfigs.Voltage.PeakReverseVoltage = -10;
-        talonfxConfigs.Feedback.SensorToMechanismRatio = Constants.Swerve.angleGearRatio;
+  /* Configure settings for the steering motor */
 
-        talonfxConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        //talonfxConfigs.MotorOutput.Inverted = ModuleConstants.angleMotorInvert;
-        angleMotor.getConfigurator().apply(talonfxConfigs);
+  private void configAngleMotorTalon(int cancoderID) {
+    angleMotor.getConfigurator().apply(new TalonFXConfiguration());
+    var talonfxConfigs = new TalonFXConfiguration();
+    talonfxConfigs.Slot0.kV = 0.0;
+    talonfxConfigs.Slot0.kS = 0.0;
+    talonfxConfigs.Slot0.kP = Constants.Swerve.angleKP;
+    talonfxConfigs.Slot0.kI = Constants.Swerve.angleKI;
+    talonfxConfigs.Slot0.kD = Constants.Swerve.angleKD;
+    talonfxConfigs.ClosedLoopGeneral.ContinuousWrap = true;
+    talonfxConfigs.CurrentLimits.SupplyCurrentLimit = Constants.Swerve.angleContinuousCurrentLimit;
+    talonfxConfigs.CurrentLimits.SupplyCurrentLimitEnable = Constants.Swerve.angleEnableCurrentLimit;
+    // talonfxConfigs.CurrentLimits.SupplyCurrentThreshold =
+    // Constants.Swerve.anglePeakCurrentLimit;
+    // talonfxConfigs.CurrentLimits.SupplyTimeThreshold =
+    // Constants.Swerve.anglePeakCurrentDuration;
+    talonfxConfigs.Voltage.PeakForwardVoltage = 10;
+    talonfxConfigs.Voltage.PeakReverseVoltage = -10;
+    talonfxConfigs.Feedback.SensorToMechanismRatio = Constants.Swerve.angleGearRatio;
 
-    }
+    talonfxConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+    // talonfxConfigs.MotorOutput.Inverted = ModuleConstants.angleMotorInvert;
+    angleMotor.getConfigurator().apply(talonfxConfigs);
+
+  }
 
   private void configAngleMotor() {
-    //angleMotor.restoreFactoryDefaults();
-    //CANSparkMaxUtil.setCANSparkMaxBusUsage(angleMotor, Usage.kPositionOnly);
+    // angleMotor.restoreFactoryDefaults();
+    // CANSparkMaxUtil.setCANSparkMaxBusUsage(angleMotor, Usage.kPositionOnly);
     configAngle.smartCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit);
     configAngle.inverted(true);
-    //configAngle.idleMode(Constants.Swerve.angleNeutralMode);
+    // configAngle.idleMode(Constants.Swerve.angleNeutralMode);
     configAngle.idleMode(IdleMode.kCoast);
     configAngle.encoder.positionConversionFactor(Constants.Swerve.angleConversionFactor);
-    configAngle.closedLoop.pid(Constants.Swerve.angleKP,Constants.Swerve.angleKI,Constants.Swerve.angleKD);
-    //angleController.setI(Constants.Swerve.angleKI);
-    //angleController.setD(Constants.Swerve.angleKD);
-   configAngle.closedLoop.velocityFF(Constants.Swerve.angleKFF);
-    //angleMotor.enableVoltageCompensation(Constants.Swerve.voltageComp);
-    //angleMotor.burnFlash();
+    configAngle.closedLoop.pid(Constants.Swerve.angleKP, Constants.Swerve.angleKI, Constants.Swerve.angleKD);
+    // angleController.setI(Constants.Swerve.angleKI);
+    // angleController.setD(Constants.Swerve.angleKD);
+    configAngle.closedLoop.velocityFF(Constants.Swerve.angleKFF);
+    // angleMotor.enableVoltageCompensation(Constants.Swerve.voltageComp);
+    // angleMotor.burnFlash();
     resetToAbsolute();
-    //angleMotor.configure(configAngle, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    // angleMotor.configure(configAngle, ResetMode.kResetSafeParameters,
+    // PersistMode.kPersistParameters);
 
     var slot0Configs = new Slot0Configs();
     slot0Configs.kP = 2.4; // An error of 1 rotation results in 2.4 V output
@@ -176,7 +178,6 @@ public class SwerveModule {
     slot0Configs.kD = 0.1; // A velocity of 1 rps results in 0.1 V output
 
     angleMotor.getConfigurator().apply(slot0Configs);
-
 
   }
 
@@ -201,7 +202,7 @@ public class SwerveModule {
     configDrive.idleMode(IdleMode.kCoast);
     configDrive.encoder.velocityConversionFactor(Constants.Swerve.driveConversionVelocityFactor);
     configDrive.encoder.positionConversionFactor(Constants.Swerve.driveConversionPositionFactor);
-    configDrive.closedLoop.pid(Constants.Swerve.angleKP,Constants.Swerve.angleKI,Constants.Swerve.angleKD);
+    configDrive.closedLoop.pid(Constants.Swerve.angleKP, Constants.Swerve.angleKI, Constants.Swerve.angleKD);
     configDrive.closedLoop.velocityFF(Constants.Swerve.angleKFF);
     resetToAbsolute();
     driveMotor.configure(configDrive, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -222,70 +223,69 @@ public class SwerveModule {
 
   private void setAngle(SwerveModuleState desiredState) {
     // Prevent rotating module if speed is less then 1%. Prevents jittering.
-    Rotation2d angle =
-        (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
-            ? lastAngle
-            : desiredState.angle;
+    Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
+        ? lastAngle
+        : desiredState.angle;
 
-   // angleController.setReference(angle.getDegrees(), ControlType.kPosition);
+    // angleController.setReference(angle.getDegrees(), ControlType.kPosition);
 
+    double angleToSet = angle.getDegrees() / 360;
 
-           
-    double angleToSet = angle.getDegrees() /360;
-        
-    if (moduleNumber == 1){
+    if (moduleNumber == 1) {
       SmartDashboard.putNumber("Mod 1 desiredspeed", desiredState.speedMetersPerSecond);
       SmartDashboard.putNumber("Mod 1 setangle", angle.getDegrees());
       SmartDashboard.putNumber("Mod 1 setangleTOSET", angleToSet);
     }
 
-
     angleMotor.setControl(angleSetter.withPosition(angleToSet));
 
-  
-// create a position closed-loop request, voltage output, slot 0 configs
-//final PositionVoltage m_request = new PositionVoltage(Conversions.degreesToFalcon(angle.getDegrees(), Constants.Swerve.angleGearRatio)).withSlot(0);
+    // create a position closed-loop request, voltage output, slot 0 configs
+    // final PositionVoltage m_request = new
+    // PositionVoltage(Conversions.degreesToFalcon(angle.getDegrees(),
+    // Constants.Swerve.angleGearRatio)).withSlot(0);
 
-// set position to 10 rotations
-//angleMotor.setControl(m_request.withPosition(10));
+    // set position to 10 rotations
+    // angleMotor.setControl(m_request.withPosition(10));
 
     lastAngle = angle;
   }
 
-  
-    /**
-     * Stops the module from driving and turning when called
-     */
-    public void stop() {
-      driveMotor.stopMotor();
-      angleMotor.stopMotor();
-    }
+  /**
+   * Stops the module from driving and turning when called
+   */
+  public void stop() {
+    driveMotor.stopMotor();
+    angleMotor.stopMotor();
+  }
 
-
-    public double getAngleD() {
-      return angleMotor.getPosition().getValueAsDouble();
-    }
+  public double getAngleD() {
+    return angleMotor.getPosition().getValueAsDouble();
+  }
 
   private Rotation2d getAngle() {
-  //  return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
-  //  var test  = angleMotor.getPosition().refresh().getValue();
-  //  return Rotation2d.fromRotations(test.abs(null));
-  
-  //  Get the raw position in rotations from Phoenix 6 API
+    // return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
+    // var test = angleMotor.getPosition().refresh().getValue();
+    // return Rotation2d.fromRotations(test.abs(null));
+
+    // Get the raw position in rotations from Phoenix 6 API
     double rotations = angleMotor.getPosition().getValueAsDouble();
 
-  //  Convert to radians and wrap into Rotation2d
+    // Convert to radians and wrap into Rotation2d
     return Rotation2d.fromRotations(rotations);
   }
 
   public Rotation2d getCanCoder() {
     var test = angleEncoder.getAbsolutePosition();
     var test2 = test.getValueAsDouble();
-    //return Rotation2d.fromDegrees(angleEncoder.get() * 360);
+    // return Rotation2d.fromDegrees(angleEncoder.get() * 360);
     return Rotation2d.fromDegrees(test2 * 360);
   }
 
   public SwerveModuleState getState() {
     return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
+  }
+
+  public SwerveModulePosition getPosition(){
+    return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
   }
 }

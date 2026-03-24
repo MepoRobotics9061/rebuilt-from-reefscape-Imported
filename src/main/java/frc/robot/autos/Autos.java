@@ -12,6 +12,7 @@ import frc.robot.subsystems.RobotLaunchChain;
 import frc.robot.subsystems.Swerve;
 import frc.robot.Constants;
 import frc.robot.commands.DriveWithJoysticks;
+import frc.robot.commands.DriveUntilCommand;
 
 public class Autos {
 
@@ -25,11 +26,11 @@ public class Autos {
 
   private final RobotCamera m_robotCamera;
 
-  private final Swerve s_Swerve; 
+  private final Swerve s_Swerve;
 
   public Autos(
-    RobotClimber robotClimber, RobotIntake robotIntake, RobotIntakePivot robotIntakePivot, RobotLaunchChain robotLaunchChain, RobotCamera robotCamera, Swerve swerve
-  ) {
+      RobotClimber robotClimber, RobotIntake robotIntake, RobotIntakePivot robotIntakePivot,
+      RobotLaunchChain robotLaunchChain, RobotCamera robotCamera, Swerve swerve) {
     m_robotClimber = robotClimber;
     m_robotIntake = robotIntake;
     m_robotIntakePivot = robotIntakePivot;
@@ -40,20 +41,23 @@ public class Autos {
 
   private Command driveCommand(double xSpeed, double ySpeed, double rSpeed) {
     return new DriveWithJoysticks(
-      s_Swerve,
-      () -> xSpeed,
-      () -> ySpeed,
-      () -> rSpeed,
-      () -> true,
-      () -> 1);
+        s_Swerve,
+        () -> xSpeed,
+        () -> ySpeed,
+        () -> rSpeed,
+        () -> true,
+        () -> 1);
   }
 
-  public Command autoCommand1() {
+  private Command DriveUntilCommand(double angle, double XPos, double YPos) {
+    return new DriveUntilCommand(s_Swerve, () -> angle, XPos, YPos);
+  }
+
+  public Command autoCommandTime() {
     return Commands
-      .sequence(
-        driveCommand(.5, .5, 0).withTimeout(2),
-        m_robotLaunchChain.fire(1).withTimeout(2)
-      );
-}
+        .sequence(
+            driveCommand(.5, .5, 0).withTimeout(2),
+            m_robotLaunchChain.fire(1).withTimeout(2));
+  }
 
 }

@@ -43,8 +43,8 @@ public class RobotContainer {
 
   private final RobotCamera m_robotCamera = new RobotCamera();
 
-  private final Swerve s_Swerve = new Swerve(m_robotCamera); 
-  
+  private final Swerve s_Swerve = new Swerve(m_robotCamera);
+
   /* Commands */
   private final Autos m_autos;
 
@@ -58,19 +58,18 @@ public class RobotContainer {
   public RobotContainer() {
 
     m_autos = new Autos(
-      m_robotClimber, m_robotIntake, m_robotIntakePivot, m_robotLaunchChain, m_robotCamera, s_Swerve
-    );
+        m_robotClimber, m_robotIntake, m_robotIntakePivot, m_robotLaunchChain, m_robotCamera, s_Swerve);
 
     m_autoChooser = new SendableChooser<Command>();
 
-      s_Swerve.setDefaultCommand(new DriveWithJoysticks(
-      s_Swerve,
-    //poseEstimator,
-      () -> -driver.getY(),
-      () -> -driver.getX(),
-      () -> driver.getZ(),
-      () -> true,
-      () -> 1.0));
+    s_Swerve.setDefaultCommand(new DriveWithJoysticks(
+        s_Swerve,
+        // poseEstimator,
+        () -> -driver.getY(),
+        () -> -driver.getX(),
+        () -> driver.getZ(),
+        () -> true,
+        () -> 1.0));
 
     configureButtonBindings();
     configureAutos();
@@ -81,26 +80,23 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     /*
-      XBox:
-        5 / LB = Intake Fuel
-        7 / Back = Push Fuel Out of Intake
-        6 / RB = Fire Fuel
-        8 / Start = Push Fuel Out of Launch Chain
-        4 / Y = Store Intake Mechanism
-        1 / A = Move Intake Mechanism to a Usable Position
-        POV [D-Pad] Up/Down = Move Climber
-        9 / Left Stick = Toggle Climb Mode
-
-      Joystick:
-
-    */
-
-    /* Driver Buttons */
-
-
+     * XBox:
+     * 5 / LB = Intake Fuel
+     * 7 / Back = Push Fuel Out of Intake
+     * 6 / RB = Fire Fuel
+     * 8 / Start = Push Fuel Out of Launch Chain
+     * 4 / Y = Store Intake Mechanism
+     * 1 / A = Move Intake Mechanism to a Usable Position
+     * POV [D-Pad] Up/Down = Move Climber
+     * 9 / Left Stick = Toggle Climb Mode
+     * 
+     * Joystick:
+     * 
+     */
 
     /* Operator Buttons */
 
+<<<<<<< HEAD
     operator.button(Constants.Controller.X).whileTrue(
       m_robotIntake.intake(.45)
     );
@@ -108,12 +104,28 @@ public class RobotContainer {
     operator.button(Constants.Controller.LB).whileTrue(
       m_robotIntake.launch(.1)
     );
+=======
+    // Intake Forwards (Taking in)
+    operator.button(Constants.Controller.LB).whileTrue(
+        m_robotIntake.forwards(.36));
 
+    // Intake Backwards (Pushing out)
+    operator.button(Constants.Controller.Back).whileTrue(
+        m_robotIntake.backwards(.1));
+>>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
+
+    // Climber Up
     operator.povUp().whileTrue(
+<<<<<<< HEAD
       m_robotClimber.manualClimberMove(-149)
     );
+=======
+        m_robotClimber.manualClimberMove(-80));
+>>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
 
+    // Climber Down
     operator.povDown().whileTrue(
+<<<<<<< HEAD
       m_robotClimber.manualClimberMove(-5)
     );
 
@@ -121,23 +133,36 @@ public class RobotContainer {
     The two m_robotLaunchChain commands need check to make sure the buttons are right.
     Start should slowly push the fuel backwards while RB should be the primary fire.
     */
+=======
+        m_robotClimber.manualClimberMove(10));
+>>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
 
+    // Launch Chain Fire
     operator.button(Constants.Controller.RB).whileTrue(
+<<<<<<< HEAD
       m_robotLaunchChain.indvSpeedCommand(1, 1)
     );
     
     operator.button(Constants.Controller.B).whileTrue(
       m_robotLaunchChain.push(-.2)
     );
+=======
+        m_robotLaunchChain.indvSpeedCommand(1, 1));
 
+    // Launch Chain Push
+    operator.button(Constants.Controller.Start).whileTrue(
+        m_robotLaunchChain.push(-.1));
+>>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
+
+    // Intake Pivot Store
     operator.button(Constants.Controller.Y).whileTrue(
-      m_robotIntakePivot.manualPivotMove(6.8)
-    );
+        m_robotIntakePivot.manualPivotMove(6.8));
 
+    // Intake Pivot Deploy
     operator.button(Constants.Controller.A).whileTrue(
-      m_robotIntakePivot.manualPivotMove(0)
-    );
+        m_robotIntakePivot.manualPivotMove(0));
 
+<<<<<<< HEAD
 
     //
     // operator.povDown().and(() -> climbMode == "On").whileTrue(
@@ -160,15 +185,35 @@ public class RobotContainer {
     // );
 
   
+=======
+    // Climber Down (when in climb mode)
+    operator.povDown().and(() -> climbMode == "On").whileTrue(
+        m_robotClimber.ClimberMove(-.1));
+
+    // Climber Up (when in climb mode)
+    operator.povUp().and(() -> climbMode == "On").whileTrue(
+        m_robotClimber.ClimberMove(.1));
+
+    // Toggle Climb Mode
+    operator.button(Constants.Controller.LeftStick).onTrue(
+        new InstantCommand(() -> {
+          if (climbMode == "Off") {
+            climbMode = "On";
+          } else {
+            climbMode = "Off";
+          }
+          SmartDashboard.putString("Climb Mode", climbMode);
+        }));
+>>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
   }
 
   private void configureAutos() {
-    m_autoChooser.addOption("1", m_autos.autoCommand1());
+    m_autoChooser.addOption("1", m_autos.autoCommandTime());
     // m_autoChooser.addOption("2", m_autos.autoCommand2());
     // m_autoChooser.addOption("3", m_autos.autoCommand3());
     // m_autoChooser.addOption("TEST", m_autos.autoCommandTEST());
 
-    m_autoChooser.setDefaultOption("2", m_autos.autoCommand1());
+    m_autoChooser.setDefaultOption("2", m_autos.autoCommandTime());
 
     SmartDashboard.putData("AutoCommand", m_autoChooser);
   }
