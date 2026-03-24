@@ -79,9 +79,9 @@ public class DriveWithJoysticks extends Command {
       //  modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
   
              swerveSubsystem.drive2(ChassisSpeeds.fromFieldRelativeSpeeds(
-      modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-       modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-       modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+      modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter,.05) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+       modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter,.05) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
+       modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter,.25) * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
        ,swerveSubsystem.getYawField()));
   
   
@@ -104,9 +104,9 @@ public class DriveWithJoysticks extends Command {
    * @param limiter how much to slow the inputs down by
    * @return the modified joystick values
    */
-  private double modifyAxis(double value, double speedModifyer, SlewRateLimiter limiter){
-    value = MathUtil.applyDeadband(value, 0.02);
-    value = Math.copySign(value * value, value);
+  private double modifyAxis(double value, double speedModifyer, SlewRateLimiter limiter , double deadband){
+    value = MathUtil.applyDeadband(value, deadband);
+    value = Math.copySign(value * value * value, value);
     value = value*speedModifyer;
     value = limiter.calculate(value);
     if(Math.abs(value)*Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND <= Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND*0.01){

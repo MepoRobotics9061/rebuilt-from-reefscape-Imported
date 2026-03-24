@@ -26,7 +26,7 @@ public class RobotClimber extends SubsystemBase {
     final int pivotWheelDeviceID = 11;
     Climber = new SparkMax(pivotWheelDeviceID, MotorType.kBrushless);
     configWheel = new SparkMaxConfig();
-    configWheel.smartCurrentLimit(20);
+    configWheel.smartCurrentLimit(60);
     configWheel.idleMode(IdleMode.kBrake);
     Climber.configure(configWheel, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     ClimberEncoder = Climber.getEncoder();
@@ -59,12 +59,12 @@ public class RobotClimber extends SubsystemBase {
     public void voidClimberMove(double manualPosition) {
  System.out.println("void climbermove: RUNNING");
       double targetSpeed = (manualPosition - ClimberEncoder.getPosition()) * .2 + GravityOffset;
-
-      if(targetSpeed < -.3) {
-        targetSpeed = -.3;
+    System.out.println("runClimberMove: targetSpeed=" + manualPosition);
+      if(targetSpeed < -.6) {
+        targetSpeed = -.6;
       }
-      if(targetSpeed > .1) {
-        targetSpeed = .1;
+      if(targetSpeed > .3){
+        targetSpeed = .3;
       }
  SmartDashboard.putNumber("Climb output", targetSpeed);
       setSpeed(targetSpeed);

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -100,20 +101,20 @@ public class RobotContainer {
 
     /* Operator Buttons */
 
-    operator.button(Constants.Controller.LB).whileTrue(
-      m_robotIntake.intake(.36)
+    operator.button(Constants.Controller.X).whileTrue(
+      m_robotIntake.intake(.45)
     );
 
-    operator.button(Constants.Controller.Back).whileTrue(
+    operator.button(Constants.Controller.LB).whileTrue(
       m_robotIntake.launch(.1)
     );
 
     operator.povUp().whileTrue(
-      m_robotClimber.manualClimberMove(-80)
+      m_robotClimber.manualClimberMove(-149)
     );
 
     operator.povDown().whileTrue(
-      m_robotClimber.manualClimberMove(10)
+      m_robotClimber.manualClimberMove(-5)
     );
 
     /*
@@ -125,8 +126,8 @@ public class RobotContainer {
       m_robotLaunchChain.indvSpeedCommand(1, 1)
     );
     
-    operator.button(Constants.Controller.Start).whileTrue(
-      m_robotLaunchChain.push(-.1)
+    operator.button(Constants.Controller.B).whileTrue(
+      m_robotLaunchChain.push(-.2)
     );
 
     operator.button(Constants.Controller.Y).whileTrue(
@@ -137,24 +138,28 @@ public class RobotContainer {
       m_robotIntakePivot.manualPivotMove(0)
     );
 
-    operator.povDown().and(() -> climbMode == "On").whileTrue(
-      m_robotClimber.ClimberMove(-.1)
-    );
 
-    operator.povUp().and(() -> climbMode == "On").whileTrue(
-      m_robotClimber.ClimberMove(.1)
-    );
+    //
+    // operator.povDown().and(() -> climbMode == "On").whileTrue(
+    //   m_robotClimber.ClimberMove(-.1)
+    // );
 
-    operator.button(Constants.Controller.LeftStick).onTrue(
-      new InstantCommand( () -> {
-        if(climbMode == "Off"){
-          climbMode = "On";
-        }else{
-          climbMode = "Off";
-        }
-        SmartDashboard.putString("Climb Mode", climbMode);
-    })
-    );
+    // operator.povUp().and(() -> climbMode == "On").whileTrue(
+    //   m_robotClimber.ClimberMove(.1)
+    // );
+
+    // operator.button(Constants.Controller.LeftStick).onTrue(
+    //   new InstantCommand( () -> {
+    //     if(climbMode == "Off"){
+    //       climbMode = "On";
+    //     }else{
+    //       climbMode = "Off";
+    //     }
+    //     SmartDashboard.putString("Climb Mode", climbMode);
+    // })
+    // );
+
+  
   }
 
   private void configureAutos() {
