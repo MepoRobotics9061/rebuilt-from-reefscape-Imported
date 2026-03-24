@@ -33,6 +33,9 @@ public class Swerve extends SubsystemBase {
   private double gyroValue;
   private Rotation2d gyroRot2d;
   private double tagDistance;
+  private double rotateErrorAmount;
+  private double XPosErrorAmount;
+  private double YPosErrorAmount;
 
   private Translation2d m_frontLeftLocation = new Translation2d(0.381, 0.381);
   private Translation2d m_frontRightLocation = new Translation2d(0.381, -0.381);
@@ -187,9 +190,12 @@ public class Swerve extends SubsystemBase {
     }
   }
 
-  public void rotateUntilVoid(double desiredAngle) {
+  public void driveUntilVoid(double desiredXPos, double desiredYPos, double desiredAngle) {
 
-    double rotateErrorAmount = gyroValue - desiredAngle;
+    rotateErrorAmount = gyroValue - desiredAngle;
+
+    XPosErrorAmount = field.getRobotPose().getX() - desiredXPos;
+    YPosErrorAmount = field.getRobotPose().getY() - desiredYPos;
 
     if (rotateErrorAmount > 180) {
       rotateErrorAmount -= 360;
@@ -217,7 +223,39 @@ public class Swerve extends SubsystemBase {
       rotateErrorAmount = -4;
     }
 
-    drive(new Translation2d(0, 0), -rotateErrorAmount, false, true);
+    if ((.05 < XPosErrorAmount) && (XPosErrorAmount < .1)) {
+      XPosErrorAmount = .1;
+    }
+
+    else if ((-.1 < XPosErrorAmount) && (XPosErrorAmount < -0.05)) {
+      XPosErrorAmount = -.1;
+    }
+
+    if (XPosErrorAmount > 5) {
+      XPosErrorAmount = .5;
+    }
+
+    if (XPosErrorAmount < -.5) {
+      XPosErrorAmount = -.5;
+    }
+
+    if ((.05 < YPosErrorAmount) && (YPosErrorAmount < .1)) {
+      YPosErrorAmount = .1;
+    }
+
+    else if ((-.1 < YPosErrorAmount) && (YPosErrorAmount < -0.05)) {
+      YPosErrorAmount = -.1;
+    }
+
+    if (YPosErrorAmount > 5) {
+      YPosErrorAmount = .5;
+    }
+
+    if (YPosErrorAmount < -.5) {
+      YPosErrorAmount = -.5;
+    }
+
+    drive(new Translation2d(XPosErrorAmount, YPosErrorAmount), -rotateErrorAmount, false, true);
   }
 
   /* Used by SwerveControllerCommand in Auto */
