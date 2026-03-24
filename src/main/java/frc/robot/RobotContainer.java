@@ -146,12 +146,12 @@ public class RobotContainer {
   }
 
   private void configureAutos() {
-    m_autoChooser.addOption("1", m_autos.autoCommand1());
+    m_autoChooser.addOption("1", m_autos.autoCommandTime());
     // m_autoChooser.addOption("2", m_autos.autoCommand2());
     // m_autoChooser.addOption("3", m_autos.autoCommand3());
     // m_autoChooser.addOption("TEST", m_autos.autoCommandTEST());
 
-    m_autoChooser.setDefaultOption("2", m_autos.autoCommand1());
+    m_autoChooser.setDefaultOption("2", m_autos.autoCommandTime());
 
     SmartDashboard.putData("AutoCommand", m_autoChooser);
   }

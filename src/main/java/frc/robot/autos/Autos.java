@@ -12,6 +12,7 @@ import frc.robot.subsystems.RobotLaunchChain;
 import frc.robot.subsystems.Swerve;
 import frc.robot.Constants;
 import frc.robot.commands.DriveWithJoysticks;
+import frc.robot.commands.DriveUntilCommand;
 
 public class Autos {
 
@@ -48,7 +49,11 @@ public class Autos {
         () -> 1);
   }
 
-  public Command autoCommand1() {
+  private Command DriveUntilCommand(double angle, double XPos, double YPos) {
+    return new DriveUntilCommand(s_Swerve, () -> angle, XPos, YPos);
+  }
+
+  public Command autoCommandTime() {
     return Commands
         .sequence(
             driveCommand(.5, .5, 0).withTimeout(2),
