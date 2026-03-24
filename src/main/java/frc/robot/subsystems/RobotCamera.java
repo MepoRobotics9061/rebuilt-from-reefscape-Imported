@@ -17,10 +17,10 @@ public class RobotCamera extends SubsystemBase {
   double gyro;
   String teamCol;
   NetworkTable table;
-  NetworkTableEntry tx;
-  NetworkTableEntry ty;
-  NetworkTableEntry ta;
-  NetworkTableEntry tid;
+  NetworkTableEntry EntryTagX;
+  NetworkTableEntry EntryTagY;
+  NetworkTableEntry EntryTagArea;
+  NetworkTableEntry EntryTagID;
 
   double tagIDSave = -1;
 
@@ -30,15 +30,15 @@ public class RobotCamera extends SubsystemBase {
   @Override
   public void periodic() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
-    tx = table.getEntry("tx");
-    ty = table.getEntry("ty");
-    ta = table.getEntry("ta");
-    tid = table.getEntry("tid");
+    EntryTagX = table.getEntry("TagX");
+    EntryTagY = table.getEntry("TagY");
+    EntryTagArea = table.getEntry("TagArea");
+    EntryTagID = table.getEntry("TagID");
 
-    tagX = tx.getDouble(0.0);
-    tagY = ty.getDouble(0.0);
-    tagArea = ta.getDouble(0.0);
-    tagID = tid.getDouble(0.0);
+    tagX = EntryTagX.getDouble(0.0);
+    tagY = EntryTagY.getDouble(0.0);
+    tagArea = EntryTagArea.getDouble(0.0);
+    tagID = EntryTagID.getDouble(0.0);
 
     if (tagID != -1) {
       tagIDSave = tagID;
@@ -51,7 +51,7 @@ public class RobotCamera extends SubsystemBase {
     SmartDashboard.putNumber("Tag Area", tagArea);
     SmartDashboard.putNumber("Tag ID", tagID);
 
-    teamCol = SmartDashboard.getString("Team Color", "r");
+    teamCol = SmartDashboard.getString("Team Color", "Red");
 
     gyro = SmartDashboard.getNumber("Gyro", 0);
 
