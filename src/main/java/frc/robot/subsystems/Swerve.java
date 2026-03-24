@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,14 +24,24 @@ public class Swerve extends SubsystemBase {
 
   private SwerveDriveOdometry swerveOdometry;
 
-  private SwerveModule[] mSwerveMods;
+  private SwerveModule[] m_SwerveMods;
 
   private RobotCamera m_robotCamera;
 
   private Field2d field;
 
   private double gyroValue;
+  private Rotation2d gyroRot2d;
   private double tagDistance;
+
+  private Translation2d m_frontLeftLocation = new Translation2d(0.381, 0.381);
+  private Translation2d m_frontRightLocation = new Translation2d(0.381, -0.381);
+  private Translation2d m_backLeftLocation = new Translation2d(-0.381, 0.381);
+  private Translation2d m_backRightLocation = new Translation2d(-0.381, -0.381);
+
+  private Pose2d m_pose;
+
+  SwerveDriveOdometry m_odometry;
 
   private double gyroATagSpinAmount;
 
@@ -40,7 +51,7 @@ public class Swerve extends SubsystemBase {
 
     gyro.zeroYaw();
 
-    mSwerveMods = new SwerveModule[] {
+    m_SwerveMods = new SwerveModule[] {
         new SwerveModule(0, Constants.Swerve.Mod0.constants),
         new SwerveModule(1, Constants.Swerve.Mod1.constants),
         new SwerveModule(2, Constants.Swerve.Mod2.constants),
@@ -53,6 +64,22 @@ public class Swerve extends SubsystemBase {
     SmartDashboard.putData("Field", field);
 
     m_robotCamera = robotCamera;
+
+    // Creating my kinematics object using the module locations
+    SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+      m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation
+    );
+    // Creating my odometry object from the kinematics object and the initial wheel positions.
+    // Here, our starting pose is 5 meters along the long end of the field and in the
+    // center of the field along the short end, facing the opposing alliance wall.
+    m_odometry = new SwerveDriveOdometry(
+      m_kinematics, gyro.getRotation2d(),
+      new SwerveModulePosition[] {
+        m_SwerveMods[0].getPosition(),
+        m_SwerveMods[1].getPosition(),
+        m_SwerveMods[2].getPosition(),
+        m_SwerveMods[3].getPosition(),
+      }, new Pose2d(2.0, 7, new Rotation2d()));
 
     // swerveOdometry = new
     // SwerveDriveOdometry(Constants.Swerve.swerveKinematics,getYaw());
@@ -67,7 +94,7 @@ public class Swerve extends SubsystemBase {
             : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
-    for (SwerveModule mod : mSwerveMods) {
+    for (SwerveModule mod : m_SwerveMods) {
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
     }
   }
@@ -92,20 +119,20 @@ public class Swerve extends SubsystemBase {
    */
   public void setModuleStates2(SwerveModuleState[] states) {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND);
-    mSwerveMods[0].setDesiredState(states[0], true);
-    mSwerveMods[1].setDesiredState(states[1], true);
-    mSwerveMods[2].setDesiredState(states[2], true);
-    mSwerveMods[3].setDesiredState(states[3], true);
+    m_SwerveMods[0].setDesiredState(states[0], true);
+    m_SwerveMods[1].setDesiredState(states[1], true);
+    m_SwerveMods[2].setDesiredState(states[2], true);
+    m_SwerveMods[3].setDesiredState(states[3], true);
   }
 
   /**
    * Stops all movement for swerve modules
    */
   public void stop() {
-    mSwerveMods[0].stop();
-    mSwerveMods[1].stop();
-    mSwerveMods[2].stop();
-    mSwerveMods[3].stop();
+    m_SwerveMods[0].stop();
+    m_SwerveMods[1].stop();
+    m_SwerveMods[2].stop();
+    m_SwerveMods[3].stop();
   }
 
   public void centerATagVoid() {
@@ -197,14 +224,14 @@ public class Swerve extends SubsystemBase {
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
 
-    for (SwerveModule mod : mSwerveMods) {
+    for (SwerveModule mod : m_SwerveMods) {
       mod.setDesiredState(desiredStates[mod.moduleNumber], false);
     }
   }
 
   public Pose2d getPose() {
     // return swerveOdometry.getPoseMeters();
-    return new Pose2d();
+    return m_pose;
   }
 
   public void resetOdometry(Pose2d pose) {
@@ -213,7 +240,7 @@ public class Swerve extends SubsystemBase {
 
   public SwerveModuleState[] getStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
-    for (SwerveModule mod : mSwerveMods) {
+    for (SwerveModule mod : m_SwerveMods) {
       states[mod.moduleNumber] = mod.getState();
     }
     return states;
@@ -246,7 +273,7 @@ public class Swerve extends SubsystemBase {
     // swerveOdometry.update(getYaw(), getStates());
     field.setRobotPose(getPose());
 
-    for (SwerveModule mod : mSwerveMods) {
+    for (SwerveModule mod : m_SwerveMods) {
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
       SmartDashboard.putNumber(
@@ -259,6 +286,20 @@ public class Swerve extends SubsystemBase {
 
     // gyroValue = gyro.getYaw() + 180;
     gyroValue = gyro.getYaw();
+    gyroRot2d = gyro.getRotation2d();
+
+    m_pose = m_odometry.update(gyroRot2d,
+      new SwerveModulePosition[] {
+      m_SwerveMods[0].getPosition(),
+      m_SwerveMods[1].getPosition(),
+      m_SwerveMods[2].getPosition(),
+      m_SwerveMods[3].getPosition()});
+
+    field.setRobotPose(getPose());
+
+    SmartDashboard.putNumber("X Position", field.getRobotPose().getX());
+    SmartDashboard.putNumber("Y Position", field.getRobotPose().getY());
+    SmartDashboard.putNumber("R Position", field.getRobotPose().getRotation().getDegrees());
 
     SmartDashboard.putNumber(
         "Gyro", gyroValue);

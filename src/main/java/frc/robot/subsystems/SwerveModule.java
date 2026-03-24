@@ -20,6 +20,7 @@ import frc.lib.math.Conversions;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -282,5 +283,9 @@ public class SwerveModule {
 
   public SwerveModuleState getState() {
     return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
+  }
+
+  public SwerveModulePosition getPosition(){
+    return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
   }
 }
