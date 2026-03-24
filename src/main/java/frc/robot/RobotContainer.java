@@ -93,47 +93,49 @@ public class RobotContainer {
      * 
      */
 
-    /* Driver Buttons */
-
     /* Operator Buttons */
 
+    // Intake Forwards (Taking in)
     operator.button(Constants.Controller.LB).whileTrue(
-        m_robotIntake.intake(.36));
+        m_robotIntake.forwards(.36));
 
+    // Intake Backwards (Pushing out)
     operator.button(Constants.Controller.Back).whileTrue(
-        m_robotIntake.launch(.1));
+        m_robotIntake.backwards(.1));
 
+    // Climber Up
     operator.povUp().whileTrue(
         m_robotClimber.manualClimberMove(-80));
 
+    // Climber Down
     operator.povDown().whileTrue(
         m_robotClimber.manualClimberMove(10));
 
-    /*
-     * The two m_robotLaunchChain commands need check to make sure the buttons are
-     * right.
-     * Start should slowly push the fuel backwards while RB should be the primary
-     * fire.
-     */
-
+    // Launch Chain Fire
     operator.button(Constants.Controller.RB).whileTrue(
         m_robotLaunchChain.indvSpeedCommand(1, 1));
 
+    // Launch Chain Push
     operator.button(Constants.Controller.Start).whileTrue(
         m_robotLaunchChain.push(-.1));
 
+    // Intake Pivot Store
     operator.button(Constants.Controller.Y).whileTrue(
         m_robotIntakePivot.manualPivotMove(6.8));
 
+    // Intake Pivot Deploy
     operator.button(Constants.Controller.A).whileTrue(
         m_robotIntakePivot.manualPivotMove(0));
 
+    // Climber Down (when in climb mode)
     operator.povDown().and(() -> climbMode == "On").whileTrue(
         m_robotClimber.ClimberMove(-.1));
 
+    // Climber Up (when in climb mode)
     operator.povUp().and(() -> climbMode == "On").whileTrue(
         m_robotClimber.ClimberMove(.1));
 
+    // Toggle Climb Mode
     operator.button(Constants.Controller.LeftStick).onTrue(
         new InstantCommand(() -> {
           if (climbMode == "Off") {
