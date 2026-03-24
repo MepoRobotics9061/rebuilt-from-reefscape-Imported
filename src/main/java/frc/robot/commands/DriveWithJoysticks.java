@@ -120,7 +120,7 @@ public class DriveWithJoysticks extends Command {
    * @return the modified joystick values
    */
   private double modifyAxis(double value, double speedModifyer, SlewRateLimiter limiter) {
-    value = MathUtil.applyDeadband(value, 0.02);
+    value = MathUtil.applyDeadband(value, 0.12);
     value = Math.copySign(value * value, value);
     value = value * speedModifyer;
     value = limiter.calculate(value);
