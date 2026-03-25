@@ -78,18 +78,18 @@ public class Swerve extends SubsystemBase {
     // center of the field along the short end, facing the opposing alliance wall.
   
   
-    // m_odometry = new SwerveDriveOdometry(
-    //     m_kinematics, gyro.getRotation2d(),
-    //     new SwerveModulePosition[] {
-    //         new SwerveModulePosition(m_SwerveMods[0].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[0].getAngleD())),
-    //         new SwerveModulePosition(m_SwerveMods[1].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[1].getAngleD())),
-    //         new SwerveModulePosition(m_SwerveMods[2].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[2].getAngleD())),
-    //         new SwerveModulePosition(m_SwerveMods[3].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())),
-    //     }, new Pose2d(2.0, 7, new Rotation2d()));
+    m_odometry = new SwerveDriveOdometry(
+        m_kinematics, gyro.getRotation2d(),
+        new SwerveModulePosition[] {
+            new SwerveModulePosition(m_SwerveMods[0].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[0].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[1].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[1].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[2].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[2].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[3].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())),
+        }, new Pose2d(2.0, 7, new Rotation2d()));
 
 
 
@@ -277,14 +277,14 @@ public class Swerve extends SubsystemBase {
     }
   }
 
-  // public Pose2d getPose() {
-  //   // return swerveOdometry.getPoseMeters();
-  //   return m_pose;
-  // }
+  public Pose2d getPose() {
+    // return swerveOdometry.getPoseMeters();
+    return new Pose2d(m_odometry.getPoseMeters().getTranslation(), gyro.getRotation2d());
+  }
 
-  // public void resetOdometry(Pose2d pose) {
-  //   // swerveOdometry.resetPosition(pose, getYaw());
-  // }
+  public void resetOdometry(Pose2d pose) {
+    // swerveOdometry.resetPosition(pose, getYaw());
+  }
 
   public SwerveModuleState[] getStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
@@ -319,7 +319,6 @@ public class Swerve extends SubsystemBase {
   @Override
   public void periodic() {
     // // swerveOdometry.update(getYaw(), getStates());
-    // field.setRobotPose(getPose());
 
     for (SwerveModule mod : m_SwerveMods) {
       SmartDashboard.putNumber(
@@ -336,22 +335,22 @@ public class Swerve extends SubsystemBase {
     gyroValue = gyro.getYaw();
     gyroRot2d = gyro.getRotation2d();
 
-    // m_pose = m_odometry.update(gyroRot2d,
-    //     new SwerveModulePosition[] {
-    //         new SwerveModulePosition(m_SwerveMods[0].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[0].getAngleD())),
-    //         new SwerveModulePosition(m_SwerveMods[1].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[1].getAngleD())),
-    //         new SwerveModulePosition(m_SwerveMods[2].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[2].getAngleD())),
-    //         new SwerveModulePosition(m_SwerveMods[3].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())) });
+    m_pose = m_odometry.update(gyroRot2d,
+        new SwerveModulePosition[] {
+            new SwerveModulePosition(m_SwerveMods[0].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[0].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[1].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[1].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[2].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[2].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[3].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())) });
 
-    // field.setRobotPose(getPose());
+    field.setRobotPose(getPose());
 
-    // SmartDashboard.putNumber("X Position", field.getRobotPose().getX());
-    // SmartDashboard.putNumber("Y Position", field.getRobotPose().getY());
-    // SmartDashboard.putNumber("R Position", field.getRobotPose().getRotation().getDegrees());
+    SmartDashboard.putNumber("X Position", field.getRobotPose().getX());
+    SmartDashboard.putNumber("Y Position", field.getRobotPose().getY());
+    SmartDashboard.putNumber("R Position", field.getRobotPose().getRotation().getDegrees());
 
     SmartDashboard.putNumber(
         "Gyro", gyroValue);

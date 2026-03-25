@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.Constants;
+import frc.robot.Controls;
 import frc.robot.autos.Autos;
 import frc.robot.commands.LimeLightCenterATagCommand;
 import frc.robot.commands.DriveWithJoysticks;
@@ -97,6 +98,8 @@ public class RobotContainer {
      * 
      */
 
+    /* Driver Buttons */
+
     driver.button(7).whileTrue(m_limeLightCenterATagCommand);
 
     /* Operator Buttons */
@@ -133,24 +136,24 @@ public class RobotContainer {
     operator.button(Controls.INTAKE_PIVOT_DOWN_BUTTON).whileTrue(
         m_robotIntakePivot.manualPivotMove(0));
 
-    // // Climber Down (when in climb mode)
-    // operator.povDown().and(() -> climbMode == "On").whileTrue(
-    // m_robotClimber.ClimberMove(-.1));
+    // Climber Down (when in climb mode)
+    operator.povDown().and(() -> climbMode == "On").whileTrue(
+    m_robotClimber.ClimberMove(-.1));
 
-    // // Climber Up (when in climb mode)
-    // operator.povUp().and(() -> climbMode == "On").whileTrue(
-    // m_robotClimber.ClimberMove(.1));
+    // Climber Up (when in climb mode)
+    operator.povUp().and(() -> climbMode == "On").whileTrue(
+    m_robotClimber.ClimberMove(.1));
 
-    // // Toggle Climb Mode
-    // operator.button(Constants.Controller.LeftStick).onTrue(
-    // new InstantCommand(() -> {
-    // if (climbMode == "Off") {
-    // climbMode = "On";
-    // } else {
-    // climbMode = "Off";
-    // }
-    // SmartDashboard.putString("Climb Mode", climbMode);
-    // }));
+    // Toggle Climb Mode
+    operator.button(Constants.Controller.LeftStick).onTrue(
+    new InstantCommand(() -> {
+    if (climbMode == "Off") {
+    climbMode = "On";
+    } else {
+    climbMode = "Off";
+    }
+    SmartDashboard.putString("Climb Mode", climbMode);
+    }));
   }
 
   private void configureAutos() {
