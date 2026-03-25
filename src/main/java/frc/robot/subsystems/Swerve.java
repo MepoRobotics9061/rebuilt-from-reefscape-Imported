@@ -78,18 +78,18 @@ public class Swerve extends SubsystemBase {
     // center of the field along the short end, facing the opposing alliance wall.
   
   
-    // m_odometry = new SwerveDriveOdometry(
-    //     m_kinematics, gyro.getRotation2d(),
-    //     new SwerveModulePosition[] {
-    //         new SwerveModulePosition(m_SwerveMods[0].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[0].getAngleD())),
-    //         new SwerveModulePosition(m_SwerveMods[1].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[1].getAngleD())),
-    //         new SwerveModulePosition(m_SwerveMods[2].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[2].getAngleD())),
-    //         new SwerveModulePosition(m_SwerveMods[3].getPosition(),
-    //             Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())),
-    //     }, new Pose2d(2.0, 7, new Rotation2d()));
+    m_odometry = new SwerveDriveOdometry(
+        m_kinematics, gyro.getRotation2d(),
+        new SwerveModulePosition[] {
+            new SwerveModulePosition(m_SwerveMods[0].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[0].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[1].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[1].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[2].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[2].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[3].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())),
+        }, new Pose2d(2.0, 7, new Rotation2d()));
 
 
 
@@ -279,7 +279,11 @@ public class Swerve extends SubsystemBase {
 
   public Pose2d getPose() {
     // return swerveOdometry.getPoseMeters();
+<<<<<<< HEAD
     return new Pose2d(field.getRobotPose().getTranslation(), getYaw());
+=======
+    return new Pose2d(m_odometry.getPoseMeters().getTranslation(), gyro.getRotation2d());
+>>>>>>> 3897936a9eb23dc86d073d338871321f81d7a483
   }
 
   public void resetOdometry(Pose2d pose) {
