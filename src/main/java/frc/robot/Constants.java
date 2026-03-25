@@ -133,6 +133,9 @@ public final class Constants {
     }
   }
 
+  /**
+   * Auto constants
+   */
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;

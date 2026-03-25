@@ -58,6 +58,11 @@ public class RobotContainer {
 
   Boolean isAuto = false;
 
+  /**
+   * Constructor for the RobotContainer class.
+   * This method initializes all the subsystems and commands, and configures the
+   * button bindings.
+   */
   public RobotContainer() {
 
     m_autos = new Autos(
@@ -81,6 +86,11 @@ public class RobotContainer {
     // SmartDashboard.putString("Climb Mode", climbMode);
   }
 
+  /**
+   * Configure the button bindings for the robot.
+   * This method sets up all the button mappings for the driver and operator
+   * controllers.
+   */
   private void configureButtonBindings() {
 
     /*
@@ -156,6 +166,13 @@ public class RobotContainer {
     // }));
   }
 
+  /**
+   * Configure the autonomous commands.
+   * 
+   * This method adds each autonomous command to a SendableChooser and sets the
+   * default option.
+   * The SendableChooser is then put on the SmartDashboard.
+   */
   private void configureAutos() {
     m_autoChooser.addOption("1", m_autos.autoCommandTime());
     // m_autoChooser.addOption("2", m_autos.autoCommand2());
@@ -167,6 +184,12 @@ public class RobotContainer {
     SmartDashboard.putData("AutoCommand", m_autoChooser);
   }
 
+  /**
+   * Returns the autonomous command chosen by the user through the SmartDashboard.
+   * The available options are configured in the configureAutos() method.
+   * 
+   * @return The autonomous command chosen by the user.
+   */
   public Command getAutonomousCommand() {
     return m_autoChooser.getSelected();
   }

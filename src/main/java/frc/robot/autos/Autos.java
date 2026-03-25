@@ -28,6 +28,16 @@ public class Autos {
 
   private final Swerve s_Swerve;
 
+  /**
+   * Creates a new Autos object.
+   * 
+   * @param robotClimber     The robot climber.
+   * @param robotIntake      The robot intake.
+   * @param robotIntakePivot The robot intake pivot.
+   * @param robotLaunchChain The robot launch chain.
+   * @param robotCamera      The robot camera.
+   * @param swerve           The swerve.
+   */
   public Autos(
       RobotClimber robotClimber, RobotIntake robotIntake, RobotIntakePivot robotIntakePivot,
       RobotLaunchChain robotLaunchChain, RobotCamera robotCamera, Swerve swerve) {
@@ -39,6 +49,14 @@ public class Autos {
     s_Swerve = swerve;
   }
 
+  /**
+   * Creates a new drive command.
+   * 
+   * @param xSpeed The x speed.
+   * @param ySpeed The y speed.
+   * @param rSpeed The r speed.
+   * @return The drive command.
+   */
   private Command driveCommand(double xSpeed, double ySpeed, double rSpeed) {
     return new DriveWithJoysticks(
         s_Swerve,
@@ -49,10 +67,23 @@ public class Autos {
         () -> 1);
   }
 
+  /**
+   * Creates a new drive until command.
+   * 
+   * @param angle The angle.
+   * @param XPos  The X position.
+   * @param YPos  The Y position.
+   * @return The drive until command.
+   */
   private Command DriveUntilCommand(double angle, double XPos, double YPos) {
     return new DriveUntilCommand(s_Swerve, () -> angle, XPos, YPos);
   }
 
+  /**
+   * Creates a new auto command time.
+   * 
+   * @return The auto command time.
+   */
   public Command autoCommandTime() {
     return Commands
         .sequence(

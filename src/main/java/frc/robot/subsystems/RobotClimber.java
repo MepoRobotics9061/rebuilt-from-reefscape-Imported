@@ -22,6 +22,9 @@ public class RobotClimber extends SubsystemBase {
 
   private double GravityOffset = -0.06;
 
+  /**
+   * Creates a new RobotClimber subsystem.
+   */
   public RobotClimber() {
     final int pivotWheelDeviceID = 11;
     Climber = new SparkMax(pivotWheelDeviceID, MotorType.kBrushless);
@@ -31,82 +34,116 @@ public class RobotClimber extends SubsystemBase {
     Climber.configure(configWheel, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     ClimberEncoder = Climber.getEncoder();
 
-    }
+  }
 
-    public Command manualClimberMove(double manualPosition) {
-      return this.runEnd(
-          () -> {
-            voidClimberMove(manualPosition);
-          },
-          () -> {
-            stop();
-          }
-        );
-    }
+  /**
+   * Creates a command to move the climber to the specified position.
+   * 
+   * @param manualPosition the position to move the climber to, in meters.
+   * @return a command that moves the climber to the specified position.
+   */
+  public Command manualClimberMove(double manualPosition) {
+    return this.runEnd(
+        () -> {
+          voidClimberMove(manualPosition);
+        },
+        () -> {
+          stop();
+        });
+  }
 
-    public Command manualClimberMoveSet(double manualPosition) {
-      return this.runEnd(
-          () -> {
-            System.out.println(": RUNNING");
-            voidClimberMove(manualPosition);
-          },
-          () -> {
-            doNothing();
-          }
-        );
-    }
-  
-    public void voidClimberMove(double manualPosition) {
- System.out.println("void climbermove: RUNNING");
-      double targetSpeed = (manualPosition - ClimberEncoder.getPosition()) * .2 + GravityOffset;
+  /**
+   * Creates a command to move the climber to the specified position.
+   * 
+   * @param manualPosition the position to move the climber to, in meters.
+   * @return a command that moves the climber to the specified position.
+   */
+  public Command manualClimberMoveSet(double manualPosition) {
+    return this.runEnd(
+        () -> {
+          System.out.println(": RUNNING");
+          voidClimberMove(manualPosition);
+        },
+        () -> {
+          doNothing();
+        });
+  }
+
+  /**
+   * Moves the climber to the specified position.
+   * 
+   * @param manualPosition the position to move the climber to, in meters.
+   */
+  public void voidClimberMove(double manualPosition) {
+    System.out.println("void climbermove: RUNNING");
+    double targetSpeed = (manualPosition - ClimberEncoder.getPosition()) * .2 + GravityOffset;
     System.out.println("runClimberMove: targetSpeed=" + manualPosition);
-      if(targetSpeed < -.6) {
-        targetSpeed = -.6;
-      }
-      if(targetSpeed > .3){
-        targetSpeed = .3;
-      }
- SmartDashboard.putNumber("Climb output", targetSpeed);
-      setSpeed(targetSpeed);
+    if (targetSpeed < -.6) {
+      targetSpeed = -.6;
     }
-
-    public Command ClimberMove(double speed) {
-      return this.runEnd(
-          () -> {
-             System.out.println("runClimberMove: RUNNING" + speed);
-      setSpeed(speed);
-          }, 
-          () -> {
-            stop();
-          }
-      );
+    if (targetSpeed > .3) {
+      targetSpeed = .3;
     }
+    SmartDashboard.putNumber("Climb output", targetSpeed);
+    setSpeed(targetSpeed);
+  }
 
+  /**
+   * Creates a command to move the climber at the specified speed.
+   * 
+   * @param speed the speed to move the climber at, in meters per second.
+   * @return a command that moves the climber at the specified speed.
+   */
+  public Command ClimberMove(double speed) {
+    return this.runEnd(
+        () -> {
+          System.out.println("runClimberMove: RUNNING" + speed);
+          setSpeed(speed);
+        },
+        () -> {
+          stop();
+        });
+  }
 
-    public void setSpeed(double speed) {
-      Climber.set(speed);
-    }
-  
-    public void stop() {
-      Climber.set(0);
-    }
+  /**
+   * Sets the speed of the climber to the specified speed.
+   * 
+   * @param speed the speed to set the climber to, in meters per second.
+   */
+  public void setSpeed(double speed) {
+    Climber.set(speed);
+  }
 
-    public void doNothing(){
+  /**
+   * Stops the climber.
+   */
+  public void stop() {
+    Climber.set(0);
+  }
 
-    }
+  /**
+   * Does nothing.
+   */
+  public void doNothing() {
 
-    public void setPosition(double position) {
-      //PositionForClimb = position;
-    }
+  }
 
-    //public boolean inPosition() {
-      //return Math.abs(PositionForClimb - ClimberEncoderSmartDashboardValue) < .5;
-    //}
+  /**
+   * Sets the position of the climber to the specified position.
+   * 
+   * @param position the position to set the climber to, in meters.
+   */
+  public void setPosition(double position) {
+    // PositionForClimb = position;
+  }
 
-  @Override public void periodic() {
+  // public boolean inPosition() {
+  // return Math.abs(PositionForClimb - ClimberEncoderSmartDashboardValue) < .5;
+  // }
+
+  @Override
+  public void periodic() {
     SmartDashboard.putNumber("Elevator Encoder", (ClimberEncoder.getPosition()));
 
- 
-    
   }
 }

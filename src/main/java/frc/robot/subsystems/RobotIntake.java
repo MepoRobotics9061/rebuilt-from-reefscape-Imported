@@ -15,6 +15,9 @@ public class RobotIntake extends SubsystemBase {
 
   private SparkMaxConfig configWheel;
 
+  /**
+   * Creates a new RobotIntake subsystem.
+   */
   public RobotIntake() {
     final int wheelDeviceID = 12;
     wheel = new SparkMax(wheelDeviceID, MotorType.kBrushless);
@@ -24,6 +27,14 @@ public class RobotIntake extends SubsystemBase {
     wheel.configure(configWheel, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
+  /**
+   * Creates a command to run the intake wheels backwards at the specified speed.
+   * 
+   * @param speed the speed to run the intake wheels backwards at, in meters per
+   *              second.
+   * @return a command that runs the intake wheels backwards at the specified
+   *         speed.
+   */
   public Command backwards(double speed) {
     return this.runEnd(
         () -> {
@@ -34,6 +45,14 @@ public class RobotIntake extends SubsystemBase {
         });
   }
 
+  /**
+   * Creates a command to run the intake wheels forwards at the specified speed.
+   * 
+   * @param speed the speed to run the intake wheels forwards at, in meters per
+   *              second.
+   * @return a command that runs the intake wheels forwards at the specified
+   *         speed.
+   */
   public Command forwards(double speed) {
     return this.runEnd(
         () -> {
@@ -44,10 +63,18 @@ public class RobotIntake extends SubsystemBase {
         });
   }
 
+  /**
+   * Sets the speed of the intake wheels to the specified speed.
+   * 
+   * @param speed the speed to set the intake wheels to, in meters per second.
+   */
   public void setWheelSpeed(double speed) {
     wheel.set(speed);
   }
 
+  /**
+   * Stops the intake wheels.
+   */
   public void stop() {
     wheel.set(0);
   }

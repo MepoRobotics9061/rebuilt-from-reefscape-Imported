@@ -36,6 +36,16 @@ public class DriveWithJoysticks extends Command {
   // poseEstimator, DoubleSupplier translationX, DoubleSupplier translationY,
   // DoubleSupplier rotation, BooleanSupplier relative, DoubleSupplier maxSpeed) {
 
+  /**
+   * Creates a new DriveWithJoysticks command.
+   * 
+   * @param swerveSubsystem The swerve subsystem to use.
+   * @param translationX    The translation X supplier.
+   * @param translationY    The translation Y supplier.
+   * @param rotation        The rotation supplier.
+   * @param relative        The relative supplier.
+   * @param maxSpeed        The max speed supplier.
+   */
   public DriveWithJoysticks(Swerve swerveSubsystem, DoubleSupplier translationX, DoubleSupplier translationY,
       DoubleSupplier rotation, BooleanSupplier relative, DoubleSupplier maxSpeed) {
     this.swerveSubsystem = swerveSubsystem;

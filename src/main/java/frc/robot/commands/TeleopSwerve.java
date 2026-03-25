@@ -20,6 +20,15 @@ public class TeleopSwerve extends Command {
   private SlewRateLimiter strafeLimiter = new SlewRateLimiter(3.0);
   private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3.0);
 
+  /**
+   * Creates a new TeleopSwerve command.
+   * 
+   * @param s_Swerve        The swerve subsystem to use.
+   * @param translationSup  The translation supplier.
+   * @param strafeSup       The strafe supplier.
+   * @param rotationSup     The rotation supplier.
+   * @param robotCentricSup The robot centric supplier.
+   */
   public TeleopSwerve(
       Swerve s_Swerve,
       DoubleSupplier translationSup,

@@ -6,6 +6,11 @@ import frc.robot.subsystems.Swerve;
 public class LimeLightCenterATagCommand extends Command {
   private Swerve s_Swerve;
 
+  /**
+   * Creates a new LimeLightCenterATagCommand.
+   * 
+   * @param s_Swerve The swerve subsystem to use.
+   */
   public LimeLightCenterATagCommand(
       Swerve s_Swerve) {
     this.s_Swerve = s_Swerve;

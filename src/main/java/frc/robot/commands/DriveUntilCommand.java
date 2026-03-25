@@ -10,6 +10,14 @@ public class DriveUntilCommand extends Command {
   private double XPos;
   private double YPos;
 
+  /**
+   * Creates a new DriveUntilCommand command.
+   * 
+   * @param s_Swerve The swerve subsystem to use.
+   * @param angle    The angle supplier.
+   * @param XPos     The X position.
+   * @param YPos     The Y position.
+   */
   public DriveUntilCommand(
       Swerve s_Swerve, DoubleSupplier angle, double XPos, double YPos) {
     this.s_Swerve = s_Swerve;

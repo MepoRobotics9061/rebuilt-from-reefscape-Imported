@@ -90,6 +90,15 @@ public class Swerve extends SubsystemBase {
 
   }
 
+  /**
+   * Drive the robot using a Translation2d and a rotation value.
+   * 
+   * @param translation   The desired translation of the robot.
+   * @param rotation      The desired rotation of the robot.
+   * @param fieldRelative Whether the translation and rotation values are relative
+   *                      to the field.
+   * @param isOpenLoop    Whether to run the drive in open loop mode.
+   */
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
     SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
@@ -140,10 +149,24 @@ public class Swerve extends SubsystemBase {
     m_SwerveMods[3].stop();
   }
 
+  /**
+   * Centers the robot on the A tag. The robot will stop once it reaches the
+   * desired position within a certain tolerance.
+   * The robot will drive at a speed proportional to the error amount. The maximum
+   * speed for the x and y positions is 0.1 meters per second and the maximum
+   * angular speed is 2 radians per second.
+   */
   public void centerATagVoid() {
     drive(new Translation2d(0, -m_robotCamera.tagX / 40), gyroATagSpinAmount, false, true);
   }
 
+  /**
+   * Drive the robot to a position to prepare for coral collection. The robot will
+   * stop once it reaches the desired position within a certain tolerance.
+   * The robot will drive at a speed proportional to the error amount. The maximum
+   * speed for the x and y positions is 0.12 meters per second and the maximum
+   * angular speed is 2 radians per second.
+   */
   public void coralPrepVoid() {
     if (m_robotCamera.tagArea != 0) {
       // drive(new Translation2d(-(10 - m_robotCamera.tagArea) / 20,
@@ -174,6 +197,13 @@ public class Swerve extends SubsystemBase {
     }
   }
 
+  /**
+   * Drive the robot to a position to prepare for algae collection. The robot will
+   * stop once it reaches the desired position within a certain tolerance.
+   * The robot will drive at a speed proportional to the error amount. The maximum
+   * speed for the x and y positions is 0.1 meters per second and the maximum
+   * angular speed is 2 radians per second.
+   */
   public void algaePrepVoid() {
     if (m_robotCamera.tagArea != 0) {
       // drive(new Translation2d(-(14 - m_robotCamera.tagArea) / 20,
@@ -192,6 +222,21 @@ public class Swerve extends SubsystemBase {
     }
   }
 
+  /**
+   * Drives the robot until it reaches a certain x position, y position, and
+   * angle.
+   * The robot will stop once it reaches the desired position and angle within a
+   * certain tolerance.
+   * The tolerance for the angle is +- 0.05 radians and the tolerance for the x
+   * and y positions is +- 0.05 meters.
+   * The robot will drive at a speed proportional to the error amount. The maximum
+   * speed for the x and y positions is 0.5 meters per second and the maximum
+   * angular speed is 4 radians per second.
+   * 
+   * @param desiredXPos  the desired x position in meters.
+   * @param desiredYPos  the desired y position in meters.
+   * @param desiredAngle the desired angle in radians.
+   */
   public void driveUntilVoid(double desiredXPos, double desiredYPos, double desiredAngle) {
 
     rotateErrorAmount = gyroValue - desiredAngle;
@@ -260,7 +305,11 @@ public class Swerve extends SubsystemBase {
     drive(new Translation2d(XPosErrorAmount, YPosErrorAmount), -rotateErrorAmount, false, true);
   }
 
-  /* Used by SwerveControllerCommand in Auto */
+  /**
+   * Sets the desired state of all the modules to the given states.
+   *
+   * @param desiredStates the desired states of the modules
+   */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
 
@@ -269,13 +318,18 @@ public class Swerve extends SubsystemBase {
     }
   }
 
+  /**
+   * Returns the current pose of the robot in the field coordinate system.
+   * 
+   * @return The current pose of the robot in the field coordinate system.
+   */
   public Pose2d getPose() {
     // return swerveOdometry.getPoseMeters();
     return new Pose2d(m_odometry.getPoseMeters().getTranslation(), gyro.getRotation2d());
   }
 
   public void resetOdometry(Pose2d pose) {
-    // swerveOdometry.resetPosition(pose, getYaw());
+    m_odometry.resetPosition(getYaw(), new SwerveModulePosition[4], pose);
   }
 
   public SwerveModuleState[] getStates() {
