@@ -24,7 +24,7 @@ public class RobotIntake extends SubsystemBase {
     wheel.configure(configWheel, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
-  public Command launch(double speed) {
+  public Command backwards(double speed) {
     return this.runEnd(
         () -> {
           setWheelSpeed(-speed);
@@ -34,7 +34,7 @@ public class RobotIntake extends SubsystemBase {
         });
   }
 
-  public Command intake(double speed) {
+  public Command forwards(double speed) {
     return this.runEnd(
         () -> {
           setWheelSpeed(speed);
