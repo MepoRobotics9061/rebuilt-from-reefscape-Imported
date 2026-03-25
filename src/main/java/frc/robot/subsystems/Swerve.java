@@ -272,6 +272,8 @@ public class Swerve extends SubsystemBase {
   public Pose2d getPose() {
     // return swerveOdometry.getPoseMeters();
     return new Pose2d(0, 0, Rotation2d.fromDegrees(0));
+    // return new Pose2d(field.getRobotPose().getTranslation(), getYaw());
+    // >>>>>>> ad9ef1c9851db199d4ad59b411c832e893d82b90
   }
 
   public void resetOdometry(Pose2d pose) {
@@ -311,7 +313,6 @@ public class Swerve extends SubsystemBase {
   @Override
   public void periodic() {
     // // swerveOdometry.update(getYaw(), getStates());
-    field.setRobotPose(getPose());
 
     for (SwerveModule mod : m_SwerveMods) {
       SmartDashboard.putNumber(
@@ -339,7 +340,7 @@ public class Swerve extends SubsystemBase {
             new SwerveModulePosition(m_SwerveMods[3].getPosition(),
                 Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())) });
 
-    field.setRobotPose(m_pose);
+    field.setRobotPose(getPose());
 
     SmartDashboard.putNumber("X Position", field.getRobotPose().getX());
     SmartDashboard.putNumber("Y Position", field.getRobotPose().getY());
