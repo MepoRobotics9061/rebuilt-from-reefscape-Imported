@@ -122,7 +122,7 @@ public class RobotContainer {
 
     // Intake Pivot Up (Storing)
     operator.button(Controls.INTAKE_PIVOT_UP_BUTTON).whileTrue(
-        m_robotIntakePivot.manualPivotMove(6.8));
+        m_robotIntakePivot.manualPivotMove(7.4));
 
     // Intake Pivot Down (Usable Position)
     operator.button(Controls.INTAKE_PIVOT_DOWN_BUTTON).whileTrue(
