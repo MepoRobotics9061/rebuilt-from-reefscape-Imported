@@ -17,6 +17,7 @@ public class RobotCamera extends SubsystemBase {
   double gyro;
   String teamCol;
   NetworkTable table;
+  NetworkTable table2;
 
   NetworkTableEntry EntryTagX;
   NetworkTableEntry EntryTagY;
@@ -31,6 +32,7 @@ public class RobotCamera extends SubsystemBase {
   @Override
   public void periodic() {
     table = NetworkTableInstance.getDefault().getTable("limelight");
+    table2 = NetworkTableInstance.getDefault().getTable("limelight-2");
 
     EntryTagX = table.getEntry("tx");
     EntryTagY = table.getEntry("ty");
