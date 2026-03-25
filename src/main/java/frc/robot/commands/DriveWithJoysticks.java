@@ -82,21 +82,6 @@ public class DriveWithJoysticks extends Command {
     // Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
     // }
 
-<<<<<<< HEAD
-      //      swerveSubsystem.drive2(new ChassisSpeeds(
-      // modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-      //  modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-      //  modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter) * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
-  
-             swerveSubsystem.drive2(ChassisSpeeds.fromFieldRelativeSpeeds(
-      modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter,.05) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-       modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter,.05) * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-       modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter,.25) * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-       ,swerveSubsystem.getYawField()));
-  
-  
-      }
-=======
     // swerveSubsystem.drive2(new ChassisSpeeds(
     // modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter) *
     // Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
@@ -115,7 +100,6 @@ public class DriveWithJoysticks extends Command {
         swerveSubsystem.getYawField()));
 
   }
->>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
 
   @Override
   public void end(boolean interrupted) {
@@ -135,17 +119,10 @@ public class DriveWithJoysticks extends Command {
    * @param limiter       how much to slow the inputs down by
    * @return the modified joystick values
    */
-<<<<<<< HEAD
-  private double modifyAxis(double value, double speedModifyer, SlewRateLimiter limiter , double deadband){
-    value = MathUtil.applyDeadband(value, deadband);
-    value = Math.copySign(value * value * value, value);
-    value = value*speedModifyer;
-=======
   private double modifyAxis(double value, double speedModifyer, SlewRateLimiter limiter) {
     value = MathUtil.applyDeadband(value, 0.12);
     value = Math.copySign(value * value, value);
     value = value * speedModifyer;
->>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
     value = limiter.calculate(value);
     if (Math.abs(value)
         * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND <= Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND * 0.01) {

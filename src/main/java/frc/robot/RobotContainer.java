@@ -96,15 +96,6 @@ public class RobotContainer {
 
     /* Operator Buttons */
 
-<<<<<<< HEAD
-    operator.button(Constants.Controller.X).whileTrue(
-      m_robotIntake.intake(.45)
-    );
-
-    operator.button(Constants.Controller.LB).whileTrue(
-      m_robotIntake.launch(.1)
-    );
-=======
     // Intake Forwards (Taking in)
     operator.button(Constants.Controller.LB).whileTrue(
         m_robotIntake.forwards(.36));
@@ -112,47 +103,22 @@ public class RobotContainer {
     // Intake Backwards (Pushing out)
     operator.button(Constants.Controller.Back).whileTrue(
         m_robotIntake.backwards(.1));
->>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
 
     // Climber Up
     operator.povUp().whileTrue(
-<<<<<<< HEAD
-      m_robotClimber.manualClimberMove(-149)
-    );
-=======
         m_robotClimber.manualClimberMove(-80));
->>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
 
     // Climber Down
     operator.povDown().whileTrue(
-<<<<<<< HEAD
-      m_robotClimber.manualClimberMove(-5)
-    );
-
-    /*
-    The two m_robotLaunchChain commands need check to make sure the buttons are right.
-    Start should slowly push the fuel backwards while RB should be the primary fire.
-    */
-=======
         m_robotClimber.manualClimberMove(10));
->>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
 
     // Launch Chain Fire
     operator.button(Constants.Controller.RB).whileTrue(
-<<<<<<< HEAD
-      m_robotLaunchChain.indvSpeedCommand(1, 1)
-    );
-    
-    operator.button(Constants.Controller.B).whileTrue(
-      m_robotLaunchChain.push(-.2)
-    );
-=======
         m_robotLaunchChain.indvSpeedCommand(1, 1));
 
     // Launch Chain Push
     operator.button(Constants.Controller.Start).whileTrue(
         m_robotLaunchChain.push(-.1));
->>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
 
     // Intake Pivot Store
     operator.button(Constants.Controller.Y).whileTrue(
@@ -162,30 +128,6 @@ public class RobotContainer {
     operator.button(Constants.Controller.A).whileTrue(
         m_robotIntakePivot.manualPivotMove(0));
 
-<<<<<<< HEAD
-
-    //
-    // operator.povDown().and(() -> climbMode == "On").whileTrue(
-    //   m_robotClimber.ClimberMove(-.1)
-    // );
-
-    // operator.povUp().and(() -> climbMode == "On").whileTrue(
-    //   m_robotClimber.ClimberMove(.1)
-    // );
-
-    // operator.button(Constants.Controller.LeftStick).onTrue(
-    //   new InstantCommand( () -> {
-    //     if(climbMode == "Off"){
-    //       climbMode = "On";
-    //     }else{
-    //       climbMode = "Off";
-    //     }
-    //     SmartDashboard.putString("Climb Mode", climbMode);
-    // })
-    // );
-
-  
-=======
     // Climber Down (when in climb mode)
     operator.povDown().and(() -> climbMode == "On").whileTrue(
         m_robotClimber.ClimberMove(-.1));
@@ -204,7 +146,6 @@ public class RobotContainer {
           }
           SmartDashboard.putString("Climb Mode", climbMode);
         }));
->>>>>>> 26a03f6efb02d50ba0b573daed96b339fb62a432
   }
 
   private void configureAutos() {
