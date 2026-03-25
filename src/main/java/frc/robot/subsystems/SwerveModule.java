@@ -20,7 +20,6 @@ import frc.lib.math.Conversions;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -67,7 +66,7 @@ public class SwerveModule {
 
     angleMotor = new TalonFX(moduleConstants.angleMotorID, "rio");
 
-    var angleConfiguration = new TalonFXConfiguration();
+    // var angleConfiguration = new TalonFXConfiguration();
     configAngleMotorTalon(moduleConstants.cancoderID);
 
     // integratedAngleEncoder = angleMotor.getEncoder();
@@ -262,6 +261,10 @@ public class SwerveModule {
     return angleMotor.getPosition().getValueAsDouble();
   }
 
+  public double getPosition() {
+    return angleMotor.getPosition().getValueAsDouble();
+  }
+
   private Rotation2d getAngle() {
     // return Rotation2d.fromDegrees(integratedAngleEncoder.getPosition());
     // var test = angleMotor.getPosition().refresh().getValue();
@@ -283,9 +286,5 @@ public class SwerveModule {
 
   public SwerveModuleState getState() {
     return new SwerveModuleState(driveEncoder.getVelocity(), getAngle());
-  }
-
-  public SwerveModulePosition getPosition(){
-    return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
   }
 }

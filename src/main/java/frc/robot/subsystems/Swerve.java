@@ -70,22 +70,28 @@ public class Swerve extends SubsystemBase {
 
     // Creating my kinematics object using the module locations
     SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
-      m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation
-    );
-    // Creating my odometry object from the kinematics object and the initial wheel positions.
-    // Here, our starting pose is 5 meters along the long end of the field and in the
+        m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation, m_backRightLocation);
+    // Creating my odometry object from the kinematics object and the initial wheel
+    // positions.
+    // Here, our starting pose is 5 meters along the long end of the field and in
+    // the
     // center of the field along the short end, facing the opposing alliance wall.
     m_odometry = new SwerveDriveOdometry(
-      m_kinematics, gyro.getRotation2d(),
-      new SwerveModulePosition[] {
-        m_SwerveMods[0].getPosition(),
-        m_SwerveMods[1].getPosition(),
-        m_SwerveMods[2].getPosition(),
-        m_SwerveMods[3].getPosition(),
-      }, new Pose2d(2.0, 7, new Rotation2d()));
+        m_kinematics, gyro.getRotation2d(),
+        new SwerveModulePosition[] {
+            new SwerveModulePosition(m_SwerveMods[0].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[0].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[1].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[1].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[2].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[2].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[3].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())),
+        }, new Pose2d(2.0, 7, new Rotation2d()));
 
     // swerveOdometry = new
-    // SwerveDriveOdometry(Constants.Swerve.swerveKinematics,getYaw());
+    // swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics,
+    // getYaw(), new Pose2d(2.0, 7, new Rotation2d()));
   }
 
   public void drive(
@@ -327,11 +333,15 @@ public class Swerve extends SubsystemBase {
     gyroRot2d = gyro.getRotation2d();
 
     m_pose = m_odometry.update(gyroRot2d,
-      new SwerveModulePosition[] {
-      m_SwerveMods[0].getPosition(),
-      m_SwerveMods[1].getPosition(),
-      m_SwerveMods[2].getPosition(),
-      m_SwerveMods[3].getPosition()});
+        new SwerveModulePosition[] {
+            new SwerveModulePosition(m_SwerveMods[0].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[0].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[1].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[1].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[2].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[2].getAngleD())),
+            new SwerveModulePosition(m_SwerveMods[3].getPosition(),
+                Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())) });
 
     field.setRobotPose(getPose());
 
