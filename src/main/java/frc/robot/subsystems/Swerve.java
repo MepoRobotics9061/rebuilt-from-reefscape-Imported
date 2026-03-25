@@ -76,26 +76,18 @@ public class Swerve extends SubsystemBase {
     // Here, our starting pose is 5 meters along the long end of the field and in
     // the
     // center of the field along the short end, facing the opposing alliance wall.
-  
-  
+
     m_odometry = new SwerveDriveOdometry(
         m_kinematics, gyro.getRotation2d(),
         new SwerveModulePosition[] {
-            new SwerveModulePosition(m_SwerveMods[0].getPosition(),
-                Rotation2d.fromDegrees(m_SwerveMods[0].getAngleD())),
-            new SwerveModulePosition(m_SwerveMods[1].getPosition(),
-                Rotation2d.fromDegrees(m_SwerveMods[1].getAngleD())),
-            new SwerveModulePosition(m_SwerveMods[2].getPosition(),
-                Rotation2d.fromDegrees(m_SwerveMods[2].getAngleD())),
+            new SwerveModulePosition(0, Rotation2d.fromDegrees(0)),
+            new SwerveModulePosition(0, Rotation2d.fromDegrees(0)),
+            new SwerveModulePosition(0, Rotation2d.fromDegrees(0)),
+            new SwerveModulePosition(0, Rotation2d.fromDegrees(0)),
             new SwerveModulePosition(m_SwerveMods[3].getPosition(),
                 Rotation2d.fromDegrees(m_SwerveMods[3].getAngleD())),
         }, new Pose2d(2.0, 7, new Rotation2d()));
 
-
-
-    // swerveOdometry = new
-    // swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics,
-    // getYaw(), new Pose2d(2.0, 7, new Rotation2d()));
   }
 
   public void drive(
