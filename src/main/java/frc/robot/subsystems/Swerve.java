@@ -149,7 +149,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public void centerATagVoid() {
-    drive(new Translation2d(0, m_robotCamera.tagX / 40), gyroATagSpinAmount, false, true);
+    drive(new Translation2d(0, -m_robotCamera.tagX / 40), gyroATagSpinAmount, false, true);
   }
 
   public void coralPrepVoid() {

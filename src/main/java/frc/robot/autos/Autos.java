@@ -56,7 +56,7 @@ public class Autos {
   public Command autoCommandTime() {
     return Commands
         .sequence(
-            driveCommand(.5, .5, 0).withTimeout(2),
+            driveCommand(-.2, 0, 0).withTimeout(1),
             m_robotLaunchChain.fire(1).withTimeout(2));
   }
 

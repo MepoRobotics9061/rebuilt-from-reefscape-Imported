@@ -91,9 +91,9 @@ public class DriveWithJoysticks extends Command {
     // Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND));
 
     swerveSubsystem.drive2(ChassisSpeeds.fromFieldRelativeSpeeds(
-        modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter)
+        -modifyAxis(translationX.getAsDouble(), maxSpeed.getAsDouble(), yLimiter)
             * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
-        modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter)
+        -modifyAxis(translationY.getAsDouble(), maxSpeed.getAsDouble(), xLimiter)
             * Constants.Swerve.MAX_VELOCITY_METERS_PER_SECOND,
         modifyAxis(rotation.getAsDouble(), maxSpeed.getAsDouble(), turnLimiter)
             * Constants.Swerve.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND,

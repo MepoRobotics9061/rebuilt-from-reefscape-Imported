@@ -54,7 +54,7 @@ public class RobotContainer {
   private final SendableChooser<Command> m_autoChooser;
 
   /* Variables */
-  String climbMode = "Off (press twice)";
+  // String climbMode = "Off (press twice)";
 
   Boolean isAuto = false;
 
@@ -78,7 +78,7 @@ public class RobotContainer {
     configureButtonBindings();
     configureAutos();
 
-    SmartDashboard.putString("Climb Mode", climbMode);
+    // SmartDashboard.putString("Climb Mode", climbMode);
   }
 
   private void configureButtonBindings() {
@@ -95,7 +95,7 @@ public class RobotContainer {
      * 9 / Left Stick = Toggle Climb Mode
      * 
      * Joystick:
-     * 
+     * 7 = Center on April Tag
      */
 
     /* Driver Buttons */
@@ -136,24 +136,24 @@ public class RobotContainer {
     operator.button(Controls.INTAKE_PIVOT_DOWN_BUTTON).whileTrue(
         m_robotIntakePivot.manualPivotMove(0));
 
-    // Climber Down (when in climb mode)
-    operator.povDown().and(() -> climbMode == "On").whileTrue(
-    m_robotClimber.ClimberMove(-.1));
+    // // Climber Down (when in climb mode)
+    // operator.povDown().and(() -> climbMode == "On").whileTrue(
+    // m_robotClimber.ClimberMove(-.1));
 
-    // Climber Up (when in climb mode)
-    operator.povUp().and(() -> climbMode == "On").whileTrue(
-    m_robotClimber.ClimberMove(.1));
+    // // Climber Up (when in climb mode)
+    // operator.povUp().and(() -> climbMode == "On").whileTrue(
+    // m_robotClimber.ClimberMove(.1));
 
-    // Toggle Climb Mode
-    operator.button(Constants.Controller.LeftStick).onTrue(
-    new InstantCommand(() -> {
-    if (climbMode == "Off") {
-    climbMode = "On";
-    } else {
-    climbMode = "Off";
-    }
-    SmartDashboard.putString("Climb Mode", climbMode);
-    }));
+    // // Toggle Climb Mode
+    // operator.button(Constants.Controller.LeftStick).onTrue(
+    // new InstantCommand(() -> {
+    // if (climbMode == "Off") {
+    // climbMode = "On";
+    // } else {
+    // climbMode = "Off";
+    // }
+    // SmartDashboard.putString("Climb Mode", climbMode);
+    // }));
   }
 
   private void configureAutos() {
@@ -162,7 +162,7 @@ public class RobotContainer {
     // m_autoChooser.addOption("3", m_autos.autoCommand3());
     // m_autoChooser.addOption("TEST", m_autos.autoCommandTEST());
 
-    m_autoChooser.setDefaultOption("2", m_autos.autoCommandTime());
+    m_autoChooser.setDefaultOption("1", m_autos.autoCommandTime());
 
     SmartDashboard.putData("AutoCommand", m_autoChooser);
   }
