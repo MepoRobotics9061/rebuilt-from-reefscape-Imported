@@ -106,11 +106,11 @@ public class RobotContainer {
 
     // Climber Up
     operator.povUp().whileTrue(
-        m_robotClimber.manualClimberMove(-80));
+        m_robotClimber.manualClimberMove(-149));
 
     // Climber Down
     operator.povDown().whileTrue(
-        m_robotClimber.manualClimberMove(10));
+        m_robotClimber.manualClimberMove(-5));
 
     // Launch Chain Fire
     operator.button(Controls.LAUNCH_CHAIN_FIRE_BUTTON).whileTrue(
