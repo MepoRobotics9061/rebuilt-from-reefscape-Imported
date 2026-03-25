@@ -279,11 +279,7 @@ public class Swerve extends SubsystemBase {
 
   public Pose2d getPose() {
     // return swerveOdometry.getPoseMeters();
-<<<<<<< HEAD
-    return new Pose2d(field.getRobotPose().getTranslation(), getYaw());
-=======
     return new Pose2d(m_odometry.getPoseMeters().getTranslation(), gyro.getRotation2d());
->>>>>>> 3897936a9eb23dc86d073d338871321f81d7a483
   }
 
   public void resetOdometry(Pose2d pose) {
