@@ -98,7 +98,7 @@ public class RobotContainer {
 
     // Intake Forwards (Taking in)
     operator.button(Constants.Controller.LB).whileTrue(
-        m_robotIntake.forwards(.36));
+        m_robotIntake.forwards(.68));
 
     // Intake Backwards (Pushing out)
     operator.button(Constants.Controller.Back).whileTrue(
@@ -116,36 +116,36 @@ public class RobotContainer {
     operator.button(Constants.Controller.RB).whileTrue(
         m_robotLaunchChain.indvSpeedCommand(1, 1));
 
-    // Launch Chain Push
+    // Launch Chain Reverse (Pushing out)
     operator.button(Constants.Controller.Start).whileTrue(
         m_robotLaunchChain.push(-.1));
 
-    // Intake Pivot Store
+    // Intake Pivot Up (Storing)
     operator.button(Constants.Controller.Y).whileTrue(
         m_robotIntakePivot.manualPivotMove(6.8));
 
-    // Intake Pivot Deploy
+    // Intake Pivot Down (Usable Position)
     operator.button(Constants.Controller.A).whileTrue(
         m_robotIntakePivot.manualPivotMove(0));
 
-    // Climber Down (when in climb mode)
-    operator.povDown().and(() -> climbMode == "On").whileTrue(
-        m_robotClimber.ClimberMove(-.1));
+    // // Climber Down (when in climb mode)
+    // operator.povDown().and(() -> climbMode == "On").whileTrue(
+    //     m_robotClimber.ClimberMove(-.1));
 
-    // Climber Up (when in climb mode)
-    operator.povUp().and(() -> climbMode == "On").whileTrue(
-        m_robotClimber.ClimberMove(.1));
+    // // Climber Up (when in climb mode)
+    // operator.povUp().and(() -> climbMode == "On").whileTrue(
+    //     m_robotClimber.ClimberMove(.1));
 
-    // Toggle Climb Mode
-    operator.button(Constants.Controller.LeftStick).onTrue(
-        new InstantCommand(() -> {
-          if (climbMode == "Off") {
-            climbMode = "On";
-          } else {
-            climbMode = "Off";
-          }
-          SmartDashboard.putString("Climb Mode", climbMode);
-        }));
+    // // Toggle Climb Mode
+    // operator.button(Constants.Controller.LeftStick).onTrue(
+    //     new InstantCommand(() -> {
+    //       if (climbMode == "Off") {
+    //         climbMode = "On";
+    //       } else {
+    //         climbMode = "Off";
+    //       }
+    //       SmartDashboard.putString("Climb Mode", climbMode);
+    //     }));
   }
 
   private void configureAutos() {
