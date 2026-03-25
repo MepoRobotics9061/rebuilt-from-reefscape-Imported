@@ -48,6 +48,8 @@ public class RobotContainer {
   /* Commands */
   private final Autos m_autos;
 
+  private final LimeLightCenterATagCommand m_limeLightCenterATagCommand;
+
   private final SendableChooser<Command> m_autoChooser;
 
   /* Variables */
@@ -61,6 +63,7 @@ public class RobotContainer {
         m_robotClimber, m_robotIntake, m_robotIntakePivot, m_robotLaunchChain, m_robotCamera, s_Swerve);
 
     m_autoChooser = new SendableChooser<Command>();
+    m_limeLightCenterATagCommand = new LimeLightCenterATagCommand(s_Swerve);
 
     s_Swerve.setDefaultCommand(new DriveWithJoysticks(
         s_Swerve,
@@ -93,6 +96,8 @@ public class RobotContainer {
      * Joystick:
      * 
      */
+
+    driver.button(7).whileTrue(m_limeLightCenterATagCommand);
 
     /* Operator Buttons */
 
