@@ -34,10 +34,10 @@ public class RobotCamera extends SubsystemBase {
     table = NetworkTableInstance.getDefault().getTable("limelight");
     table2 = NetworkTableInstance.getDefault().getTable("limelight-2");
 
-    EntryTagX = table.getEntry("TagX");
-    EntryTagY = table.getEntry("TagY");
-    EntryTagArea = table.getEntry("TagArea");
-    EntryTagID = table.getEntry("TagID");
+    EntryTagX = table.getEntry("tx");
+    EntryTagY = table.getEntry("ty");
+    EntryTagArea = table.getEntry("ta");
+    EntryTagID = table.getEntry("tid");
 
     tagX = EntryTagX.getDouble(0.0);
     tagY = EntryTagY.getDouble(0.0);
