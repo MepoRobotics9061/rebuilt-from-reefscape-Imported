@@ -42,7 +42,7 @@ public class Swerve extends SubsystemBase {
   private Translation2d m_backLeftLocation = new Translation2d(-0.381, 0.381);
   private Translation2d m_backRightLocation = new Translation2d(-0.381, -0.381);
 
-  private Pose2d m_pose;
+  private Pose2d m_pose = new Pose2d();
 
   SwerveDriveOdometry m_odometry;
 
